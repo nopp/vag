@@ -1,0 +1,447 @@
+/* Link a */
+
+a:link {
+    text-decoration: none;
+    color: #333333;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #333333;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #333333;
+}
+
+#topBar {
+    margin: 0 auto;
+    width: 804px;
+    height: auto;
+    display: table;
+    background: #008dc8;
+}
+
+#container {
+    margin: 0 auto;
+    width: 802px;
+    height: auto;
+    display: table;
+    font-family: "verdana","sans";
+    font-size: medium;
+    background: whitesmoke;
+    color: #333333;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #a4a69d;    
+}
+
+#footer {
+    margin: 0 auto;
+    width: 802px;
+    height: auto;
+    display: table;
+    font-family: "verdana","sans";
+    font-size: xx-small;
+    text-align: left;
+    color: #666666;
+    margin-top: 5px;
+}
+
+#left {
+    float: left;
+    width: 180px;
+    height: auto;
+    display: table;
+    padding: 10px;
+}
+
+#right {
+    float: right;
+    width: 560px;
+    height: auto;
+    display: table;
+    padding: 10px;
+    background: white;
+    font-size: small;
+}
+
+#right_logo {
+    width: 560px;
+    height: auto;
+    display: table;
+    margin-bottom: 10px;
+	text-align: center;
+}
+
+.textbox {
+    border: solid 1px #CCCCCC; 
+    background: white;
+}
+
+.textbox_purge {
+    border: solid 1px #CCCCCC;
+    background: white;
+    width: 450px;
+    margin-bottom: 10px;
+}
+
+.right_dm0 {
+    float: left;
+    width: 274px;
+    height: auto;
+    display: table;
+    margin-right: 3px;
+    margin-left: 3px;
+    background: whitesmoke;
+    margin-bottom: 6px;
+}
+
+/* dom0 Health */
+
+.dom0Green {
+    width: 560px;
+    height: 10px;
+    display: table;
+    background: #88aa00;
+}
+
+.dom0Gray {
+    width: 550px;
+    height: 10px;
+    display: table;
+    background: whitesmoke;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dom0Memory {
+    float: left;
+    width: 185px;
+    height: auto;
+    display: table;
+    margin-bottom: 10px;
+    background-image: url("/static/img/memory.png");
+    background-repeat: no-repeat;
+}
+
+.dom0Hd {
+    float: left;
+    width: 185px;
+    height: auto;
+    display: table;
+    margin-bottom: 10px;
+    background-image: url("/static/img/hdd.png");
+    background-repeat: no-repeat;
+}
+
+.dom0Proc {
+    float: left;
+    width: 185px;
+    height: auto;
+    display: table;
+    margin-bottom: 10px;
+    background-image: url("/static/img/processor.png");
+    background-repeat: no-repeat;
+    font-family: "verdana","sans";
+}
+
+.dom0Processor {
+    width: 560px;
+    height: 35px;
+    display: table;
+    background: whitesmoke;
+    background-image: url("/static/img/processor.png");
+    background-repeat: no-repeat;
+    margin-bottom: 5px;
+    padding-top: 8px;
+    font-family: "verdana","sans";
+}
+
+/* Realy used */
+
+.dom0Left {
+	float: left;
+	width: 275px;
+	height: auto;
+	display: table;
+	background: whitesmoke;
+}
+
+.dom0Right {
+	float: right;
+	width: 275px;
+	height: auto;
+	display: table;
+	background: whitesmoke;
+}
+
+.dom0On {
+    width: 248px;
+    height: 16px;
+    display: table;
+    background: white url("/static/img/state_on.png") 1px no-repeat;
+	padding-left: 20px;
+    font-family: "verdana","sans";
+	font-size: 16px;
+	border-left: 7px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.dom0Off {
+    width: 248px;
+    height: 16px;
+    display: table;
+    background: white url("/static/img/state_off.png") 1px no-repeat;
+	padding-left: 20px;
+    font-family: "verdana","sans";
+	font-size: 16px;
+	border-left: 7px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.dom0IP {
+    width: 266px;
+    height: 16px;
+    display: table;
+    background: url("/static/img/network.png") 1px no-repeat;
+	padding-left: 18px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+    font-family: "verdana","sans";
+}
+
+.dom0Vcpu {
+    width: 266px;
+    height: 16px;
+    display: table;
+    background: url("/static/img/processor.png") 1px no-repeat;
+	padding-left: 18px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+    font-family: "verdana","sans";
+}
+
+.dom0Fmemory {
+    width: 266px;
+    height: 16px;
+    display: table;
+    background: url("/static/img/memory.png") 1px no-repeat;
+	padding-left: 18px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+    font-family: "verdana","sans";
+}
+
+.dom0List {
+    width: 255px;
+    height: 15px;
+    display: table;
+    background: white url("/static/img/list.png") 1px no-repeat;
+	background-position: right;
+	margin-top: 3px;
+	padding-right: 18px;
+    font-family: "verdana","sans";
+	text-align: right;
+	border-top: 1px solid #333333;
+	border-right: 1px solid #333333;
+}
+
+
+/* Realy used */
+
+.info_title {
+    width: 145px;
+    height: auto;
+    display: table;
+    margin-left: 40px;
+    padding-top: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: "verdana","sans";
+}
+
+.right_xenicon {
+    width: 274px;
+    height: 2px;
+    display: table;
+    background: #88aa00;
+    margin-bottom: 5px;
+}
+
+.domulist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.domulist li {
+    background-color: #CCCCCC;
+    background-image: url("/static/img/domu.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 35px;
+    margin: .4em 0;
+    border-left: solid 10px #88aa00;
+}
+
+.dom0health {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+}
+
+#liUsers {
+    background-image: url("/static/img/users.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+}
+
+#liPurge {
+    background-image: url("/static/img/purge.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+}
+
+#liVcl {
+    background-image: url("/static/img/vcl.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+}
+
+#liAdd {
+    background-image: url("/static/img/adddom0.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+}
+
+#liHome {
+    background-image: url("/static/img/servers.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+}
+
+#menu {
+    background-image: url("/static/img/menu.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 3px 0 3px 20px;
+	border-bottom: 1px solid #CCCCCC;
+	
+}
+
+.titleBarHome {
+    margin: 0 auto;
+    width: 560px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-image: url("/static/img/servers.png");
+    background-repeat: no-repeat;
+    background-position: 0.1% 50%;
+    font-family: "verdana","sans";
+    border-bottom: solid 1px #CCCCCC;
+}
+
+.titleBarAdd {
+    margin: 0 auto;
+    width: 560px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 10px;
+    background-image: url("/static/img/adddom0.png");
+    background-repeat: no-repeat;
+    background-position: 0.3% 50%;
+    border-bottom: solid 1px #CCCCCC;
+}
+
+.titleBarPurge {
+    margin: 0 auto;
+    width: 555px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 10px;
+    background-image: url("img/purge.png");
+    background-repeat: no-repeat;
+    background-position: 0.3% 50%;
+    border-bottom: solid 1px #88aa00;
+}
+
+.titleBarVcl {
+    margin: 0 auto;
+    width: 555px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 10px;
+    background-image: url("img/vcl.png");
+    background-repeat: no-repeat;
+    background-position: 0.3% 50%;
+    border-bottom: solid 1px #88aa00;
+}
+
+.titleBarUsers {
+    margin: 0 auto;
+    width: 555px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 10px;
+    background-image: url("/static/img/users.png");
+    background-repeat: no-repeat;
+    background-position: 0.3% 50%;
+    border-bottom: solid 1px #88aa00;
+}
+
+.user {
+    margin: 0 auto;
+    width: 555px;
+    height: 16px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 5px;
+    background-image: url("/static/img/user.png");
+    background-repeat: no-repeat;
+    background-position: 0.3% 50%;
+    border-bottom: solid 1px #88aa00;
+}
+
+/* Index */
+#login_logo {
+    float: left;
+    width: 400px;
+    height: 140px;
+    display: table;
+    text-align: center;
+    padding-top: 5px;
+}
+
+#login {
+    float: right;
+    width: 300px;
+    height: auto;
+    display: table;
+    margin-bottom: 10px;
+}
+
+.login_textbox {
+    border-style: solid;
+    border-color: #CCCCCC;
+}

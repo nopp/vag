@@ -1,0 +1,13 @@
+    {% extends "layout.html" %}
+    {% block body %}
+        <div class="titleBarAdd">&nbsp;&nbsp;&nbsp;&nbsp; Register Varnish</div><br>
+        <form action="register_varnish" method="POST">
+                <div>IP</div>
+                <div><input id="ip" class="textbox" type="text" name="ip" /> </div>
+                <div>Port</div>
+                <div><input id="port" class="textbox" type="text" name="port" /></div>
+                <div>Secret</div>
+                <div><input id="secret" class="textbox" type="text" name="secret" /></div>
+                <div><input type="submit" name="submit" class="textbox" value="Register" /></div>
+        </form>
+        {% endblock %}

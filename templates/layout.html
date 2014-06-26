@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>vag.carlit.us</title>
+        <link rel=stylesheet type=text/css href="/static/style.css">
+    </head>
+    <body>
+        <div id="topBar">&nbsp;</div>
+        <div id="container">
+            <div id="left">
+                                <ul class="dom0health">
+                                        <li id="liHome"><a href="/"><font size="-1">Show Varnish's</font></a></li>
+                        				<li id="liAdd"><a href="/register"><font size="-1">Register Varnish</font></a></li>
+                        				<li id="liPurge"><a href="/purge"><font size="-1">Purge</font></a></li>
+                        				<li id="liVcl"><a href="/vcl"><font size="-1">VCL configure</font></a></li>
+                                </ul>
+            </div>
+            <div id="right">
+                <div id="right_logo"><img src="/static/img/logo.png" alt="logo" /></div>
+                <div align="center">Varnish Admnistration GUI</div>
+                                {% with messages = get_flashed_messages() %}
+                                  {% if messages %}
+                                        <ul class=flashes>
+                                        {% for message in messages %}
+                                          <li>{{ message }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                  {% endif %}
+                                {% endwith %}
+                                {% block body %}{% endblock %}
+            </div>
+        </div>
+        <div id="footer">
+                <br>
+                0.1 GNU GPLv3 license (http://www.github.com/nopp/vag)
+        </div>
+    </body>
+</html>
+

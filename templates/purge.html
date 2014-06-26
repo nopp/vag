@@ -1,0 +1,17 @@
+    {% extends "layout.html" %}
+    {% block body %}
+        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; Purge URL/String</div><br>
+        <form action="purge_url" method="POST">
+                <div><input id="purge_url" class="textbox_purge" type="text" name="purge" /> <input type="submit" name="submit" class="textbox" value="Purge" /></div>
+        </form>
+	<h3>Purge example</h3>
+	Empty the whole cache:<br>
+	req.url ~ /<br><br>
+	Remove everything below posts/ on any site in the cache:<br>
+	req.url ~ "/posts/"<br><br>
+	Remove all PNG files on virtualhost example.com:<br>
+	req.http.host ~ ".*\.example.com" && req.url ~ "\.png$"<br><br>
+	Remove all HTML content underneath a sub-URL on a virtualhost:<br>
+	req.http.host ~ ".*\.example.com" && req.url ~ "^/posts" && req.http.content-type == "text/html"<br>	
+        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; RECENT PURGES</div><br>
+        {% endblock %}
