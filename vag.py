@@ -17,28 +17,28 @@ def index():
 # Register new varnish server
 @app.route('/register')
 def register():
-    return render_template('addVarnish.html')
+    return render_template('addVarnish.html', clusters=returnClusters())
 
 @app.route('/register_varnish', methods=['POST'])
 def registerVarnish():
 	ip = None
 	if request.method == 'POST':
-		rtn = addVarnish("juca",request.form['ip'],request.form['port'],request.form['secret'])
+		rtn = addVarnish(request.form['name'],request.form['ip'],request.form['port'],request.form['secret'],request.form['cluster'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
-# Purge varnish url or string
-@app.route('/purge')
+# BAN varnish url or string
+@app.route('/ban')
 def purge():
-    return render_template('purge.html')
+    return render_template('ban.html')
 
-@app.route('/purge_url', methods=['POST'])
+@app.route('/ban_url', methods=['POST'])
 def purgeUrl():
-    purge = None
+    banned = None
     if request.method == 'POST':
         print request.form['ip']
-	purge = request.form['ip']
-    return render_template('purged.html',purge=ip)
+	banned = request.form['ip']
+    return render_template('banned.html',banned=ip)
 
 
 # Purge varnish url or string

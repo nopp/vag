@@ -1,37 +1,66 @@
 import commands
-import libvirt
-import sqlite3
+import MySQLdb
 import time
 import sys
 
-# List Varnish's
+def connect():
+	try:
+		con = MySQLdb.connect(host='localhost', user='yourUserHere', passwd='yourPassHere',db='vag')
+		return con
+	except:
+		return "MySQL connection error!"
+
+def returnClusters():
+	try:
+		con = connect()
+		c = con.cursor()
+		c.execute('select count(*) from cluster')
+		total = c.fetchone()[0]
+		clusters = []
+		if total >= 1:
+			c.execute('select * from cluster')
+			for cst in c.fetchall():
+				cst = [cst[0],cst[1]]	
+				clusters.append(cst)
+			c.close()
+			return clusters
+	except:
+		return "Please register your clusters!"
+
 def listVarnish():
 	try:
-		db = sqlite3.connect('vag.db')
-		query = db.execute('select count(*) from varnish')
-		total = int(query.fetchone()[0])
+		con = connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish')
+		total = c.fetchone()[0]
 		varnishs = []
 		if total >= 1:
-			queryVarnish = db.execute('select * from varnish')
-			for vns in queryVarnish.fetchall():
+			c.execute('select * from varnish')
+			for vns in c.fetchall():
 				vns = [vns[0],vns[1],vns[2],vns[3]]	
 				varnishs.append(vns)
+			c.close()	
 			return varnishs
 		else:
+			c.close()
 			return "Please register your varnish's!"
 	except:
 		return "Error to connect on sqlite"
 
-def addVarnish(name,ip,port,secret):
+def addVarnish(name,ip,port,secret,cluster):
 	try:
-		db = sqlite3.connect('vag.db')
-		query = db.execute('select count(*) from varnish where ip = ?', [ip]).fetchone()
-		total = int(query[0])
+		con = connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where ip = %s',[ip])
+		total = c.fetchone()[0]
+		print total
 		if total >= 1:
+			c.close()
 			return "This varnish "+ip+" has already been added!"
 		else:
-			db.execute('insert into varnish (name,ip,port,secret) values (?, ?, ?, ?)',[name,ip,port,secret])
-			db.commit()
-			return "Varnish"+name+" registered!"
+			c.execute('insert into varnish (name,ip,port,secret,id_cluster) values (%s, %s, %s, %s, %s)',[name,ip,port,secret,cluster])
+			con.commit()
+			c.close()
+			return "Varnish "+name+" registered!"
 	except:
-		return "Error to connect on sqlite"
+		return "Error to connect on MySQL"
