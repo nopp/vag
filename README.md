@@ -1,5 +1,7 @@
-Varnish Administration GUI (Under development!)
-===============================================
+Varnish Administration GUI 
+==========================
+
+Under development!
 
 * VCL Editor
 * Purge
