@@ -36,7 +36,7 @@ python vag.py
 
 http://ip:5010
 
-Screeshots
+Screenhots
 ==========
 ![](http://s29.postimg.org/v3p1ohtlj/tela_3.png)
 ![](http://s28.postimg.org/76hy2tw2l/tela_2.png)
