@@ -99,7 +99,7 @@ def urlBan(url,cluster):
 		if total >= 1:
 			c.execute('select * from varnish where id_cluster = %s',[cluster])
 			for vns in c.fetchall():
-				print vns[2]
+				# print vns[2]
 				# Varnish IP
 				conn = httplib.HTTPConnection(vns[2])
 				# Domnain
