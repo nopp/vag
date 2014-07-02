@@ -33,7 +33,7 @@ def register():
 def registerVarnish():
 	ip = None
 	if request.method == 'POST':
-		rtn = addVarnish(request.form['name'],request.form['ip'],request.form['port'],request.form['secret'],request.form['cluster'])
+		rtn = addVarnish(request.form['name'],request.form['ip'],request.form['cluster'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
