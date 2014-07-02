@@ -1,17 +1,17 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; BAN URL/String</div><br>
+        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; BAN URL</div><br>
         <form action="url_ban" method="POST">
-                <div><input id="ban_url" class="textbox_purge" type="text" name="ban_url" /> <input type="submit" name="submit" class="textbox" value="BAN" /></div>
+                <div>
+					<input id="ban_url" class="textbox_purge" type="text" name="ban_url" />
+					<select name="cluster">
+                    {% for cst in clusters %}
+                        <option value="{{ cst[0] }}">{{ cst[1] }}</option>
+                    {% endfor %}
+                    </select>
+					<input type="submit" name="submit" class="textbox" value="BAN" />
+				</div>
         </form>
 	<h3>BAN example</h3>
-	Empty the whole cache:<br>
-	req.url ~ /<br><br>
-	Remove everything below posts/ on any site in the cache:<br>
-	req.url ~ "/posts/"<br><br>
-	Remove all PNG files on virtualhost example.com:<br>
-	req.http.host ~ ".*\.example.com" && req.url ~ "\.png$"<br><br>
-	Remove all HTML content underneath a sub-URL on a virtualhost:<br>
-	req.http.host ~ ".*\.example.com" && req.url ~ "^/posts" && req.http.content-type == "text/html"<br>	
-        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; RECENT BANs</div><br>
-        {% endblock %}
+    http://url/uri
+    {% endblock %}

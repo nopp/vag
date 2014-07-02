@@ -1,13 +1,15 @@
 import commands
 import MySQLdb
 import httplib
+import urllib
+from urlparse import urlparse
 import subprocess
 import time
 import sys
 
 def connect():
 	try:
-		con = MySQLdb.connect(host='localhost', user='root', passwd='yourPassHere',db='vag')
+		con = MySQLdb.connect(host='localhost', user='root', passwd='passHere',db='vag')
 		return con
 	except:
 		return "MySQL connection error!"
@@ -84,11 +86,30 @@ def addCluster(name):
 	except:
 		return "Error to connect on MySQL"
 
-def urlBan(url):
-	conn = httplib.HTTPConnection("blog.carlosmalucelli.com")
-	conn.request("PURGE", "/"+url)
-	result = conn.getresponse()
-	if result.status == 200:
-		return "Ban "+url+" OK, "+result.reason
-	else:
-		return "Ban "+url+" nOK, "+result.reason
+def urlBan(url,cluster):
+	try:
+		con = connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
+		total = c.fetchone()[0]
+		result = urlparse(url)
+		#print result
+		domain = result.netloc
+		uri = result.path
+		if total >= 1:
+			c.execute('select * from varnish where id_cluster = %s',[cluster])
+			for vns in c.fetchall():
+				print vns[2]
+				# Varnish IP
+				conn = httplib.HTTPConnection(vns[2])
+				# Domnain
+				headers = {"Host": domain}	
+				# URI to BAN
+				conn.request("PURGE", uri, "", headers)
+			c.close()
+			return "Url "+url+" banned!"
+		else:
+			c.close()
+			return "This url "+url+" not exists!"
+	except:
+		return "Error to connect on MySQL"

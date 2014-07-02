@@ -3,4 +3,23 @@ Varnish Administration GUI
 * VCL Editor
 * Purge
 
+Varnish 3.X 4.X
+
+Varnish VCL:
+
+acl purge {
+    "localhost";
+    "0.0.0.0"/0;
+}
+
+----- vcl_recv
+
+    if (req.request == "PURGE") {
+        if (!client.ip ~purge) {
+            error 405 "Not allowed";
+        }
+        ban("req.http.host == " +req.http.host+" && req.url ~ "+req.url);
+        error 200 "Ban added";
+    }
+
 Under development!

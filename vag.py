@@ -40,12 +40,12 @@ def registerVarnish():
 # BAN varnish url or string
 @app.route('/ban')
 def purge():
-    return render_template('ban.html')
+    return render_template('ban.html', clusters=returnClusters())
 
 @app.route('/url_ban', methods=['POST'])
 def banUrl():
 	if request.method == 'POST':
-		rtn = urlBan(request.form['ban_url'])
+		rtn = urlBan(request.form['ban_url'],request.form['cluster'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
