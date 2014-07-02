@@ -1,4 +1,5 @@
 Varnish Administration GUI (Under development!)
+===============================================
 
 * VCL Editor
 * Purge
@@ -6,16 +7,16 @@ Varnish Administration GUI (Under development!)
 Python + Flask
 Varnish 3.X 4.X
 
-Varnish VCL:
-
-== Varnish config
+Varnish config
+==============
 
 acl purge {
     "localhost";
     "0.0.0.0"/0;
 }
 
------ vcl_recv
+vcl_recv
+--------
 
     if (req.request == "PURGE") {
         if (!client.ip ~purge) {
@@ -25,7 +26,8 @@ acl purge {
         error 200 "Ban added";
     }
 
-== How to use
+How to use
+==========
 
 python vag.py
 
