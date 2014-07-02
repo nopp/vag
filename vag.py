@@ -1,5 +1,3 @@
-from sqlite3 import dbapi2 as sqlite3
-
 # Flak Module
 from flask import *
 
@@ -13,6 +11,18 @@ app.secret_key = 'YG>.k*((*@jjkh>>'
 def index():
 	varnishs = listVarnish() 
 	return render_template('login.html', varnishs=varnishs)
+
+# Register new cluster
+@app.route('/cluster')
+def cluster():
+    return render_template('addCluster.html')
+
+@app.route('/register_cluster', methods=['POST'])
+def registerCluster():
+	if request.method == 'POST':
+		rtn = addCluster(request.form['name'])
+	flash(rtn)
+	return redirect(url_for('index'))
 
 # Register new varnish server
 @app.route('/register')
@@ -32,14 +42,12 @@ def registerVarnish():
 def purge():
     return render_template('ban.html')
 
-@app.route('/ban_url', methods=['POST'])
-def purgeUrl():
-    banned = None
-    if request.method == 'POST':
-        print request.form['ip']
-	banned = request.form['ip']
-    return render_template('banned.html',banned=ip)
-
+@app.route('/url_ban', methods=['POST'])
+def banUrl():
+	if request.method == 'POST':
+		rtn = urlBan(request.form['ban_url'])
+	flash(rtn)
+	return redirect(url_for('index'))
 
 # Purge varnish url or string
 @app.route('/vcl')

@@ -1,0 +1,10 @@
+    {% extends "layout.html" %}
+    {% block body %}
+        <div class="titleBarAdd">&nbsp;&nbsp;&nbsp;&nbsp; Register Cluster</div><br>
+        <form action="register_cluster" method="POST">
+                <div>Name</div>
+                <div><input id="name" class="textbox" type="text" name="name" /> </div>
+				<br><br>
+                <div><input type="submit" name="submit" class="textbox" value="Register" /></div>
+        </form>
+        {% endblock %}
