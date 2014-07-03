@@ -19,6 +19,7 @@ http://ip:5010
 
 Screenshots
 ==========
-![](http://s29.postimg.org/v3p1ohtlj/tela_3.png)
-![](http://s29.postimg.org/lpsrfk93r/tela_x.png)
-![](http://s17.postimg.org/e5xhb7ntb/tela1.png)
+![](http://i59.tinypic.com/344sk6r.png)
+![](http://i59.tinypic.com/2ezjndv.png)
+![](http://i59.tinypic.com/72w22d.png)
+![](http://i60.tinypic.com/2iqzrjs.png)
