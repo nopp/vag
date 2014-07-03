@@ -353,6 +353,22 @@ a:hover {
     border-bottom: solid 1px #CCCCCC;
 }
 
+.titleListVarnish {
+    margin: 0 auto;
+    width: 560px;
+    height: 15px;
+    display: table;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-image: url("/static/img/list_varnish.png");
+    background-repeat: no-repeat;
+    background-position: 0.1% 50%;
+    font-family: "verdana","sans";
+    border-bottom: solid 1px #CCCCCC;
+}
+
 .titleBarAdd {
     margin: 0 auto;
     width: 560px;
@@ -378,7 +394,7 @@ a:hover {
     background-image: url("img/purge.png");
     background-repeat: no-repeat;
     background-position: 0.3% 50%;
-    border-bottom: solid 1px #88aa00;
+    border-bottom: solid 1px #CCCCCC;
 }
 
 .titleBarVcl {
@@ -392,7 +408,7 @@ a:hover {
     background-image: url("img/vcl.png");
     background-repeat: no-repeat;
     background-position: 0.3% 50%;
-    border-bottom: solid 1px #88aa00;
+    border-bottom: solid 1px #CCCCCC;
 }
 
 .titleBarUsers {

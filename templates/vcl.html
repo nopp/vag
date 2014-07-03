@@ -1,4 +1,12 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarVcl">&nbsp;&nbsp;&nbsp;&nbsp; VCL configure</div><br>
+        <div class="titleBarVcl">&nbsp;&nbsp;&nbsp;&nbsp; VCL editor</div><br>
+		<form action="vcl_edit" method="POST">
+			<select name="cluster">
+        	{% for cst in clusters %}
+             	<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+        	{% endfor %}
+			</select>
+			<input type="submit" name="submit" class="textbox" value="Edit" />
+		</form>
     {% endblock %}

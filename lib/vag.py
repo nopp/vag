@@ -1,11 +1,13 @@
 import commands
 import MySQLdb
-import httplib
 import urllib
 from urlparse import urlparse
 import subprocess
 import time
 import sys
+
+# Varnish Socket API
+from lib.vsapi import *
 
 def connect():
 	try:
@@ -13,6 +15,17 @@ def connect():
 		return con
 	except:
 		return "MySQL connection error!"
+
+def connectVarnish(ip,secret):
+	try:
+		varnish = VarnishAdminSocket()
+		varnish.host = ip
+		varnish.port = 6082
+		varnish.secret = secret+"\n" 
+		varnish.connect()
+		return varnish
+	except:
+		return "Can't connect on varnish "+ip
 
 def returnClusters():
 	try:
@@ -69,7 +82,7 @@ def addVarnish(name,ip,cluster):
 	except:
 		return "Error to connect on MySQL"
 
-def addCluster(name):
+def addCluster(name,secret):
 	try:
 		con = connect()
 		c = con.cursor()
@@ -79,7 +92,7 @@ def addCluster(name):
 			c.close()
 			return "This cluster "+ip+" has already been added!"
 		else:
-			c.execute('insert into cluster (name) values (%s)',[name])
+			c.execute('insert into cluster (name,secret) values (%s,%s)',[name,secret])
 			con.commit()
 			c.close()
 			return "Cluster "+name+" registered!"
@@ -87,29 +100,49 @@ def addCluster(name):
 		return "Error to connect on MySQL"
 
 def urlBan(url,cluster):
+	con = connect()
+	c = con.cursor()
+	c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
+	total = c.fetchone()[0]
+	result = urlparse(url)
+	domain = result.netloc
+	uri = result.path
+	if total >= 1:
+		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+		for vns in c.fetchall():
+			conVar = connectVarnish(vns[2],vns[6])
+			conVar.ban('req.http.host ~ '+domain+' && req.url ~ ^'+uri+'$')	
+			conVar.quit()
+		c.close()
+		return "Url "+url+" banned!"
+	else:
+		c.close()
+		return "This url "+url+" not exists!"
+
+def returnVclActive(cluster):
 	try:
 		con = connect()
 		c = con.cursor()
-		c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
-		total = c.fetchone()[0]
-		result = urlparse(url)
-		print result
-		domain = result.netloc
-		uri = result.path
-		if total >= 1:
-			c.execute('select * from varnish where id_cluster = %s',[cluster])
-			for vns in c.fetchall():
-				print vns[2]
-				# Varnish IP
-				conn = httplib.HTTPConnection(vns[2])
-				# Domnain
-				headers = {"Host": domain}	
-				# URI to BAN
-				conn.request("PURGE", uri, "", headers)
-			c.close()
-			return "Url "+url+" banned!"
-		else:
-			c.close()
-			return "This url "+url+" not exists!"
+		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+		result = c.fetchone()
+		conVar = connectVarnish(result[2],result[6])
+		resultVcl = []
+		resultVcl = conVar.vcl_list().split("\n")
+		for vcl in resultVcl:
+			resultAux = re.match("active",vcl)
+			if resultAux:
+				return vcl.split()[2]
 	except:
-		return "Error to connect on MySQL"
+		return "Don't have VCL active on this cluster"
+
+def returnVcl(vclName,idCluster):
+	try:
+		con = connect()
+		c = con.cursor()
+		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[idCluster])
+		result = c.fetchone()
+		conVar = connectVarnish(result[2],result[6])
+		resultVcl = conVar.vcl_show(vclName)
+		return resultVcl
+	except:
+		return "Don't have VCL active on this cluster"

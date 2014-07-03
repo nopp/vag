@@ -4,23 +4,26 @@ from flask import *
 # VAG Module
 from lib.vag import *
 
+# Varnish Socket API
+from lib.vsapi import *
+
 app = Flask(__name__)
 app.secret_key = 'YG>.k*((*@jjkh>>'
 
 @app.route("/")
 def index():
 	varnishs = listVarnish() 
-	return render_template('login.html', varnishs=varnishs)
+	return render_template('home.html', varnishs=varnishs)
 
 # Register new cluster
 @app.route('/cluster')
 def cluster():
-    return render_template('addCluster.html')
+	return render_template('addCluster.html')
 
 @app.route('/register_cluster', methods=['POST'])
 def registerCluster():
 	if request.method == 'POST':
-		rtn = addCluster(request.form['name'])
+		rtn = addCluster(request.form['name'],request.form['secret'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
@@ -49,10 +52,15 @@ def banUrl():
 	flash(rtn)
 	return redirect(url_for('index'))
 
-# Purge varnish url or string
 @app.route('/vcl')
 def vcl():
-    return render_template('vcl.html')
+    return render_template('vcl.html', clusters=returnClusters())
+
+@app.route('/vcl_edit', methods=['POST'])
+def vclEdit():
+	if request.method == 'POST':
+		vclData = returnVcl(returnVclActive(request.form['cluster']),request.form['cluster'])
+		return render_template('vcl_edit.html', vcl_data=vclData)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=5010,debug=True)
