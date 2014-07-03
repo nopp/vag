@@ -1,5 +1,13 @@
     {% extends "layout.html" %}
     {% block body %}
         <div class="titleBarVcl">&nbsp;&nbsp;&nbsp;&nbsp; VCL editor</div><br>
-		{{ vcl_data }}
+		<pre id="editor">
+			{{ vcl_data }}
+		</pre>
+		<script src="/static/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.setTheme("ace/theme/twilight");
+			editor.getSession().setMode("ace/mode/javascript");
+		</script>
     {% endblock %}
