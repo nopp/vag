@@ -19,7 +19,5 @@ http://ip:5010
 
 Screenshots
 ==========
-![](http://i59.tinypic.com/344sk6r.png)
-![](http://i59.tinypic.com/2ezjndv.png)
-![](http://i59.tinypic.com/72w22d.png)
-![](http://i60.tinypic.com/2iqzrjs.png)
+![](http://i57.tinypic.com/scynox.png)
+
