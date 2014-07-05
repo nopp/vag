@@ -1,10 +1,10 @@
 Varnish Administration GUI 
 ==========================
 
-* VCL Editor (Under development!)
+* VCL Editor ... Under development! 80% :) 
 * Purge
 
-Python + Flask
+Python + Flask + Bootstrap (layout)
 
 Varnish 3.X 4.X
 
