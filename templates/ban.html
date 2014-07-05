@@ -1,17 +1,19 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarPurge">&nbsp;&nbsp;&nbsp;&nbsp; BAN URL</div><br>
+        <h2 class="linha"><i class="fa fa-refresh"> BAN URL</i></h2
         <form action="url_ban" method="POST">
-                <div>
-					<input id="ban_url" class="textbox_purge" type="text" name="ban_url" />
-					<select name="cluster">
-                    {% for cst in clusters %}
-                        <option value="{{ cst[0] }}">{{ cst[1] }}</option>
-                    {% endfor %}
-                    </select>
-					<input type="submit" name="submit" class="textbox" value="BAN" />
-				</div>
+			<div class="form-group">
+				<label for="url">URL <small>Ex: http://www.example.com/article1</small></label>
+				<input id="ban_url" class="form-control" type="text" name="ban_url" />
+			</div>
+			<div class="form-group">
+				<label for="cluster">Cluster</label>
+				<select name="cluster" class="form-control">
+            	{% for cst in clusters %}
+            		<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+            	{% endfor %}
+            	</select>
+			</div>
+			<button type="submit" class="btn btn-primary">BAN</button>
         </form>
-	<h3>BAN example</h3>
-    http://url/uri
     {% endblock %}

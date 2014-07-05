@@ -1,15 +1,17 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarAdd">&nbsp;&nbsp;&nbsp;&nbsp; Register Cluster</div><br>
+        <h2 class="linha"><i class="fa fa-cogs"> Register Cluster</i></h2>
         <form action="register_cluster" method="POST">
-                <div>Name</div>
-                <div><input id="name" class="textbox" type="text" name="name" /> </div>
-                <div>Secret</div>
-                <div><input id="secret" class="textbox" type="text" name="secret" /> </div>
-				<br>
-				All varnish's in this cluster, should have the same secret value.
-				<br>
-				<br>
-                <div><input type="submit" name="submit" class="textbox" value="Register" /></div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" class="form-control" type="text" name="name" />
+			</div>
+            <div class="form-group">
+                <label for="name">Secret</label>
+                <input id="secret" class="form-control" type="text" name="secret" />
+			</div>
+			All varnish's in this cluster, should have the same secret value.
+			<br><br>
+           	<button type="submit" class="btn btn-primary">Register</button>
         </form>
-        {% endblock %}
+    {% endblock %}

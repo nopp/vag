@@ -1,18 +1,23 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarAdd">&nbsp;&nbsp;&nbsp;&nbsp; Register Varnish</div><br>
+        <h2 class="linha"><i class="fa fa-cog"> Register Varnish</i></h2>
         <form action="register_varnish" method="POST">
-                <div>Name</div>
-                <div><input id="name" class="textbox" type="text" name="name" /> </div>
-                <div>IP</div>
-                <div><input id="ip" class="textbox" type="text" name="ip" /> </div>
-                <div>Cluster (<a href="/cluster">new cluster</a>)</div>
-				<select name="cluster">
-				{% for cst in clusters %}
-                    <option value="{{ cst[0] }}">{{ cst[1] }}</option>
-                {% endfor %}
-				</select>
-				<br><br>
-                <div><input type="submit" name="submit" class="textbox" value="Register" /></div>
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input id="name" name="name" type="text" class="form-control" placeholder="">
+                <div>
+				<div class="form-group">
+					<label for="ip">IP</label>
+					<input id="ip" name="ip" type="text" class="form-control" placeholder="">
+				</div>
+				<div class="form-group">
+					<label for="cluster">Cluster (<a href="/cluster">new cluster</a>)</label>
+                	<select name="cluster" class="form-control">
+                	{% for cst in clusters %}
+                    	<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+                	{% endfor %}
+                	</select>
+				</div>
+				<button type="submit" class="btn btn-primary">Register</button>
         </form>
         {% endblock %}

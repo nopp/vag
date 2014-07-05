@@ -1,7 +1,0 @@
-                {% extends "layout.html" %}
-                {% block body %}
-					<div class="titleBarHome">&nbsp;&nbsp;&nbsp;&nbsp; Registered Varnish's</div><br>
-					{% for vns in varnishs: %}
-						{{vns[1]}}({{vns[2]}})<br>
-					{% endfor %}	
-                {% endblock %}

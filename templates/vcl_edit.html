@@ -1,13 +1,20 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarVcl">&nbsp;&nbsp;&nbsp;&nbsp; VCL editor</div><br>
+	<style type="text/css" media="screen">
+    	#editor {
+        	display: table;
+        	width: 800px;
+        	height: 800px;
+    	}
+		</style>
+        <h2 class="linha"><i class="fa fa-pencil-square-o"> VCL editor</i></h2>
 		<pre id="editor">
 			{{ vcl_data }}
 		</pre>
 		<script src="/static/edit/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			var editor = ace.edit("editor");
-			editor.setTheme("ace/theme/twilight");
-			editor.getSession().setMode("ace/mode/javascript");
+			editor.setTheme("ace/theme/github");
+			editor.getSession().setMode("ace/mode/c_cpp");
 		</script>
     {% endblock %}

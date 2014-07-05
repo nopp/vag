@@ -1,12 +1,15 @@
     {% extends "layout.html" %}
     {% block body %}
-        <div class="titleBarVcl">&nbsp;&nbsp;&nbsp;&nbsp; VCL editor</div><br>
+        <h2 class="linha"><i class="fa fa-pencil-square-o"> VCL editor</i></h2>
 		<form action="vcl_edit" method="POST">
-			<select name="cluster">
-        	{% for cst in clusters %}
-             	<option value="{{ cst[0] }}">{{ cst[1] }}</option>
-        	{% endfor %}
-			</select>
-			<input type="submit" name="submit" class="textbox" value="Edit" />
+			<div class="form-group">
+				<label for="cluster">Cluster</label>
+				<select name="cluster" class="form-control">
+        		{% for cst in clusters %}
+             		<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+        		{% endfor %}
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Edit</button>
 		</form>
     {% endblock %}
