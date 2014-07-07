@@ -10,16 +10,19 @@
     <title>VAG - Varnish Administration GUI</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/bs/css/bootstrap.min.css" rel="stylesheet">
+   	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.close').click(function(){
+               $(".close").hide(); 
+               $(".alert").hide(); 
+            });
+        })
+    </script>
+    <link href="static/bs/css/bootstrap.css" rel="stylesheet">
     <link href="static/style.css" rel="stylesheet">
 
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -41,7 +44,11 @@
 	  {% with messages = get_flashed_messages() %}
          {% if messages %}
 			<br>
-			<div class="alert alert-info" role="alert">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
                 {% for message in messages %}
                		{{ message }}
                 {% endfor %}
@@ -51,7 +58,5 @@
       {% block body %}{% endblock %}
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="static/bs/dist/js/bootstrap.min.js"></script>
   </body>
 </html>

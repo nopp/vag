@@ -62,5 +62,12 @@ def vclEdit():
 		vclData = returnVcl(returnVclActive(request.form['cluster']),request.form['cluster'])
 		return render_template('vcl_edit.html', vcl_data=vclData)
 
+@app.route('/send_vcl', methods=['POST'])
+def sendVcl():
+	if request.method == 'POST':
+		rtn = request.form['cnt']
+	flash(rtn)
+	return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=5010,debug=True)
