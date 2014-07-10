@@ -23,4 +23,4 @@ Screenshots
 ![](http://i62.tinypic.com/cryxj.png)
 ![](http://i58.tinypic.com/2z7j5lx.png)
 ![](http://i60.tinypic.com/2n1f20z.png)
-![](http://i61.tinypic.com/125ompt.png)
+![](http://s21.postimg.org/vzdv39r47/tela_editor.png)
