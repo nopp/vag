@@ -10,6 +10,7 @@ from lib.vsapi import *
 # Lib extras
 import json
 import ast
+import time
 
 app = Flask(__name__)
 app.secret_key = 'YG>.k*((*@jjkh>>'
@@ -74,8 +75,9 @@ def sendVcl():
 			aux = aux+ln
 		aux = aux.replace('"','\\"')
 		aux = aux.replace('\t',' ')
-		rtn = saveVCL("jucakk",request.form['clusterID'],aux)
-		#rtn = aux
+		# Generate random name VCL
+		vclName = str(time.time()).replace(".","")
+		rtn = saveVCL(vclName,request.form['clusterID'],aux)
 	flash(rtn)
 	return redirect(url_for('index'))
 

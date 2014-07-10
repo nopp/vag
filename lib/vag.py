@@ -136,6 +136,7 @@ def returnVclActive(cluster):
 		return "Don't have VCL active on this cluster"
 
 def returnVcl(vclName,idCluster):
+	print vclName
 	try:
 		con = connect()
 		c = con.cursor()
@@ -143,6 +144,10 @@ def returnVcl(vclName,idCluster):
 		result = c.fetchone()
 		conVar = connectVarnish(result[2],result[6])
 		resultVcl = conVar.vcl_show(vclName)
+		resultVcl = resultVcl.replace(";",";\n")
+		resultVcl = resultVcl.replace("}","}\n\n")
+		resultVcl = resultVcl.replace("{","{\n")
+		resultVcl = resultVcl.replace(" ","\t")
 		return resultVcl
 	except:
 		return "Don't have VCL active on this cluster"
@@ -153,14 +158,18 @@ def saveVCL(name,cluster,vclConteudo):
 	c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
 	total = c.fetchone()[0]
 	if total >= 1:
-		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s LIMIT 1',[cluster])
 		for vns in c.fetchall():
 			conVar = connectVarnish(vns[2],vns[6])
-			returnTeste = conVar.vcl_inline("teste",vclConteudo)	
-			conVar.quit()
-			print returnTeste
+			returnCode = conVar.vcl_inline(name,vclConteudo)	
+			if returnCode == 200:
+				conVar.vcl_use(name)
+				rtn = "VCL "+name+" on "+vns[1]+" added!"
+			else:
+				rtn = "VCL "+name+" on "+vns[1]+" not added!"
+		conVar.quit()
 		c.close()
-		return "VCL on "+vns[1]+" added!"
+		return rtn
 	else:
 		c.close()
 		return "VCL on "+vns[1]+" fail!"

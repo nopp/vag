@@ -150,14 +150,14 @@ class VarnishAdminSocket(object):
         return response
 
     def vcl_inline(self,vclName,vclContent):
-		"""Runs the vcl.inline command"""
-		(code, response) = self.send('vcl.inline '+vclName+' "'+vclContent+'"')
-		return response
+        """Runs the vcl.inline command"""
+        (code, response) = self.send('vcl.inline '+vclName+' "'+vclContent+'"')
+        return code
 
-	#def vcl_use(self,vclName):
-	#	"""Runs the vcl.use command"""
-	#	(code, response) = self.send("vcl.use "+vclName)
-	#	return response
+    def vcl_use(self,vclName):
+        """Runs the vcl.use command"""
+        (code, response) = self.send("vcl.use "+vclName)
+        return response
 
     # Send the start command
     # Returns true or false
