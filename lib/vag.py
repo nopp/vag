@@ -146,3 +146,21 @@ def returnVcl(vclName,idCluster):
 		return resultVcl
 	except:
 		return "Don't have VCL active on this cluster"
+
+def saveVCL(name,cluster,vclConteudo):
+	con = connect()
+	c = con.cursor()
+	c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
+	total = c.fetchone()[0]
+	if total >= 1:
+		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+		for vns in c.fetchall():
+			conVar = connectVarnish(vns[2],vns[6])
+			returnTeste = conVar.vcl_inline("teste",vclConteudo)	
+			conVar.quit()
+			print returnTeste
+		c.close()
+		return "VCL on "+vns[1]+" added!"
+	else:
+		c.close()
+		return "VCL on "+vns[1]+" fail!"

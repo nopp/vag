@@ -1,7 +1,7 @@
 """
 Simple Python Varnish socket interface.
 """
-import socket, re, string
+import socket, re, string, json
 
 try:
     import hashlib
@@ -150,14 +150,14 @@ class VarnishAdminSocket(object):
         return response
 
     def vcl_inline(self,vclName,vclContent):
-        """Runs the vcl.inline command"""
-        (code, response) = self.send("vcl.inline "+vclName+" "+vclContent)
-        return response
-
-	def vcl_use(self,vclName):
-		"""Runs the vcl.use command"""
-		(code, response) = self.send("vcl.use "+vclName)
+		"""Runs the vcl.inline command"""
+		(code, response) = self.send('vcl.inline '+vclName+' "'+vclContent+'"')
 		return response
+
+	#def vcl_use(self,vclName):
+	#	"""Runs the vcl.use command"""
+	#	(code, response) = self.send("vcl.use "+vclName)
+	#	return response
 
     # Send the start command
     # Returns true or false

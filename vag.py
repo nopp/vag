@@ -7,6 +7,10 @@ from lib.vag import *
 # Varnish Socket API
 from lib.vsapi import *
 
+# Lib extras
+import json
+import ast
+
 app = Flask(__name__)
 app.secret_key = 'YG>.k*((*@jjkh>>'
 
@@ -60,12 +64,18 @@ def vcl():
 def vclEdit():
 	if request.method == 'POST':
 		vclData = returnVcl(returnVclActive(request.form['cluster']),request.form['cluster'])
-		return render_template('vcl_edit.html', vcl_data=vclData)
+		return render_template('vcl_edit.html', vcl_data=vclData, clusterID=request.form['cluster'])
 
 @app.route('/send_vcl', methods=['POST'])
 def sendVcl():
+	aux = ""
 	if request.method == 'POST':
-		rtn = request.form['cnt']
+		for ln in request.form['vclConteudo'].splitlines():
+			aux = aux+ln
+		aux = aux.replace('"','\\"')
+		aux = aux.replace('\t',' ')
+		rtn = saveVCL("jucakk",request.form['clusterID'],aux)
+		#rtn = aux
 	flash(rtn)
 	return redirect(url_for('index'))
 

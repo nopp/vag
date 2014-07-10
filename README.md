@@ -1,7 +1,7 @@
 Varnish Administration GUI 
 ==========================
 
-* VCL Editor ... Under development! 80% :) 
+* VCL Editor, almost done! (95%), need some tests!
 * Purge
 
 Python + Flask + Bootstrap (layout)

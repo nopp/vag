@@ -10,7 +10,8 @@
 		</style>
         <h2 class="linha"><i class="fa fa-pencil-square-o"> VCL editor</i></h2>
 		<form id="target" action="send_vcl" method="POST">
-			<input type="hidden" name="cnt" value="">
+			<input type="hidden" name="vclConteudo" value="">
+			<input type="hidden" name="clusterID" value="{{ clusterID }}">
 		</form>
 		<pre id="editor">
 			{{ vcl_data }}
@@ -25,7 +26,7 @@
 		$(document).ready(function(){
 			$('.btn').click(function(){
 				var conteudoEditor = editor.getValue();
-				$('input[name="cnt"]').val(conteudoEditor);
+				$('input[name="vclConteudo"]').val(conteudoEditor);
 				$("#target").submit();
 				//$.post("/teste", {conteudo: conteudoEditor});
     		});
