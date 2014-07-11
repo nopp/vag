@@ -8,6 +8,13 @@ Python + Flask + Bootstrap (layout)
 
 Varnish 3.X 4.X
 
+To Do
+=====
+
+* Authentication
+* User groups
+* Graphics
+
 How to use
 ==========
 
