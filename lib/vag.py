@@ -118,6 +118,24 @@ class Vag:
 				c.close()
 				return rtn
 
+        def varnishByCluster(self):
+            con = self.connect()
+            con2 = self.connect()
+            c = con.cursor()
+            v = con2.cursor()
+            c.execute('select count(*) from cluster')
+            total = c.fetchone()[0]
+            resultClusters = {}
+            if total >= 1:
+                c.execute('select * from cluster ORDER by name ASC')
+                for cluster in c.fetchall():
+                    aux = []
+                    v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
+                    for varnish in v.fetchall():
+                        aux.append(varnish[1]+" "+varnish[2])
+                    resultClusters[cluster[1]] = aux
+            return resultClusters
+				
 		def returnVclActive(self,cluster):
 			con = self.connect()
 			c = con.cursor()
