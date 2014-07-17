@@ -1,23 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
-	<br>
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title">Registered Varnish's</h3>
-		</div>
-		<div class="panel-body">
-		{% for vns in varnishs: %}
-			{{vns[1]}}({{vns[2]}})<br>
-		{% endfor %}	
-		</div>
-	</div>
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title">Last BANs</h3>
-		</div>
-		<div class="panel-body">
-			:)
-		</div>
-	</div>
+    <h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
+    <br>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Registered Varnish's by Cluster</h3>
+        </div>
+        <div class="panel-body">
+        {% for key,value in clt.iteritems() %}
+            <b>{{ key }}</b><br>
+            {% for v in value %}
+                &nbsp;&nbsp;{{ v }}<br>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Last BANs</h3>
+        </div>
+        <div class="panel-body">
+        :)  
+        </div>
+    </div>
 {% endblock %}
