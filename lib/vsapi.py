@@ -114,7 +114,7 @@ class vsApi():
 					rtn = "BAN error: http://"+domain+"/"+uri
 				return rtn
 			except URLError, e:
-				return e
+				return str(e.reason)
 
 		def vcl_ban_list(self,ipAgent):
 			uName = config.get('conf','vaName')
