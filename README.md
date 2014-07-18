@@ -1,7 +1,7 @@
 Varnish Administration GUI 
 ==========================
 
-* VCL Editor
+* VCL Editor (vim like :))
 * Purge
 
 Required
