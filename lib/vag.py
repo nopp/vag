@@ -81,7 +81,7 @@ class Vag:
 			except:
 				return "Error to connect on MySQL"
 
-		def addCluster(self,name,secret):
+		def addCluster(self,name):
 			try:
 				con = self.connect()
 				c = con.cursor()
@@ -91,21 +91,18 @@ class Vag:
 					c.close()
 					return "This cluster "+ip+" has already been added!"
 				else:
-					c.execute('insert into cluster (name,secret) values (%s,%s)',[name,secret])
+					c.execute('insert into cluster (name) values (%s)',[name])
 					con.commit()
 					c.close()
 					return "Cluster "+name+" registered!"
 			except:
 				return "Error to connect on MySQL"
 
-		def urlBan(self,url,cluster):
+		def urlBan(self,domain,uri,cluster):
 			con = self.connect()
 			c = con.cursor()
 			c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
 			total = c.fetchone()[0]
-			result = urlparse(url)
-			domain = result.netloc
-			uri = result.path
 			if total >= 1:
 				c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
 				rtn = ""
@@ -118,24 +115,43 @@ class Vag:
 				c.close()
 				return rtn
 
-        def varnishByCluster(self):
-            con = self.connect()
-            con2 = self.connect()
-            c = con.cursor()
-            v = con2.cursor()
-            c.execute('select count(*) from cluster')
-            total = c.fetchone()[0]
-            resultClusters = {}
-            if total >= 1:
-                c.execute('select * from cluster ORDER by name ASC')
-                for cluster in c.fetchall():
-                    aux = []
-                    v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
-                    for varnish in v.fetchall():
-                        aux.append(varnish[1]+" "+varnish[2])
-                    resultClusters[cluster[1]] = aux
-            return resultClusters
-				
+		def varnishByCluster(self):
+			con = self.connect()
+			con2 = self.connect()
+			c = con.cursor()
+			v = con2.cursor()
+			c.execute('select count(*) from cluster')
+			total = c.fetchone()[0]
+			resultClusters = {}
+			if total >= 1:
+				c.execute('select * from cluster ORDER by name ASC')
+				for cluster in c.fetchall():
+					aux = []
+					v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
+					for varnish in v.fetchall():
+						aux.append(varnish[1]+" ("+varnish[2]+")")
+					resultClusters[cluster[1]] = aux
+			return resultClusters
+
+		def lastBans(self):
+			con = self.connect()
+			con2 = self.connect()
+			c = con.cursor()
+			v = con2.cursor()
+			c.execute('select count(*) from cluster')
+			total = c.fetchone()[0]
+			resultBans = {}
+			if total >= 1:
+				c.execute('select * from cluster ORDER by name ASC')
+				for cluster in c.fetchall():
+					aux = []
+					v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC LIMIT 1',[cluster[0]])
+					for varnish in v.fetchall():
+						vsapi = vsApi()
+						aux.append(vsapi.vcl_ban_list(varnish[2]))
+					resultBans[cluster[1]] = aux
+			return resultBans
+
 		def returnVclActive(self,cluster):
 			con = self.connect()
 			c = con.cursor()
@@ -163,7 +179,7 @@ class Vag:
 			c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
 			total = c.fetchone()[0]
 			if total >= 1:
-				c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s LIMIT 1',[cluster])
+				c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
 				for vns in c.fetchall():
 					vsapi = vsApi()
 					rtn = vsapi.vcl_save(vns[2],vclConteudo)	

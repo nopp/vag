@@ -18,8 +18,7 @@ app.secret_key = 'aYG>.k*((*@jjkh>>'
 @app.route("/")
 def index():
 	vag = Vag()
-	varnishs = vag.listVarnish() 
-	return render_template('home.html', varnishs=varnishs)
+	return render_template('home.html', clt=vag.varnishByCluster())
 
 # Register new cluster
 @app.route('/cluster')
@@ -30,7 +29,7 @@ def cluster():
 def registerCluster():
 	if request.method == 'POST':
 		vag = Vag()
-		rtn = vag.addCluster(request.form['name'],request.form['secret'])
+		rtn = vag.addCluster(request.form['name'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
@@ -53,13 +52,13 @@ def registerVarnish():
 @app.route('/ban')
 def purge():
 	vag = Vag()
-	return render_template('ban.html', clusters=vag.returnClusters())
+	return render_template('ban.html', clusters=vag.returnClusters(), ban=vag.lastBans())
 
 @app.route('/url_ban', methods=['POST'])
 def banUrl():
 	if request.method == 'POST':
 		vag = Vag()
-		rtn = vag.urlBan(request.form['ban_url'],request.form['cluster'])
+		rtn = vag.urlBan(request.form['ban_domain'],request.form['ban_uri'],request.form['cluster'])
 	flash(rtn)
 	return redirect(url_for('index'))
 
@@ -84,4 +83,4 @@ def sendVcl():
 	return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5010,debug=True)
+    app.run(host='172.16.19.130',port=80,debug=True)

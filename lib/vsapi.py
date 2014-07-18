@@ -18,7 +18,7 @@ class vsApi():
 			req.add_header('Authorization', userData)
 			try:
 				res = []
-				res = urllib2.urlopen(req).read().splitlines()
+				res = urllib2.urlopen(req,timeout = 2).read().splitlines()
 				return res[-1].split()[2]
 			except URLError, e:
 				return e.read()
@@ -32,7 +32,7 @@ class vsApi():
 			req.add_header("Content-type", "application/x-www-form-urlencoded")
 			req.add_header('Authorization', userData)
 			try:
-				rtn = urllib2.urlopen(req)
+				rtn = urllib2.urlopen(req,timeout = 2)
 				return rtn.read()
 			except URLError, e:
 				return e.read()	
@@ -46,7 +46,7 @@ class vsApi():
 			req.add_header("Content-type", "application/x-www-form-urlencoded")
 			req.add_header('Authorization', userData)
 			try:
-				res = urllib2.urlopen(req)
+				res = urllib2.urlopen(req,timeout = 2)
 				conteudo = res.read()
 				aux = ""
 				for line in conteudo.splitlines():
@@ -70,7 +70,7 @@ class vsApi():
 			req.add_header("Content-type", "application/x-www-form-urlencoded")
 			req.add_header('Authorization', userData)
 			try:
-				res = urllib2.urlopen(req)
+				res = urllib2.urlopen(req,timeout = 2)
 				# Use VCL
 				vclName = self.lastVCL(ipAgent)
 				rtn = res.read()+" "+self.vcl_use(ipAgent,vclName)
@@ -87,7 +87,7 @@ class vsApi():
 			req.get_method = lambda: 'PUT'
 			req.add_header('Authorization', userData)
 			try:
-				rtn = urllib2.urlopen(req)
+				rtn = urllib2.urlopen(req,timeout = 2)
 				if rtn.code == 200:
 					rtn = "VCL "+vclName+" activated!"
 				else:
@@ -97,23 +97,46 @@ class vsApi():
 				return e.read()
 
 		def vcl_ban(self,ipAgent,domain,uri):
-			print domain
-			print uri
 			uName = config.get('conf','vaName')
 			pWord = config.get('conf','vaPass')
 			userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
-			req = urllib2.Request('http://'+ipAgent+':6085/ban'+uri)
+			req = urllib2.Request('http://'+ipAgent+':6085/ban/'+uri)
 			req.get_method = lambda: 'POST'
 			req.add_header('Accept', 'application/json')
 			req.add_header('Host', domain)
 			req.add_header("Content-type", "application/x-www-form-urlencoded")
 			req.add_header('Authorization', userData)
 			try:
-				rtn = urllib2.urlopen(req)
+				rtn = urllib2.urlopen(req,timeout = 2)
 				if rtn.code == 200:
 					rtn = "http://"+domain+"/"+uri+" banned!"
 				else:
-					rtn = "BAN error: http://"+domain+"/"+uri+" "+rtn.msg
+					rtn = "BAN error: http://"+domain+"/"+uri
 				return rtn
 			except URLError, e:
-				return e.read()
+				return e
+
+		def vcl_ban_list(self,ipAgent):
+			uName = config.get('conf','vaName')
+			pWord = config.get('conf','vaPass')
+			userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
+			req = urllib2.Request('http://'+ipAgent+':6085/ban/')
+			req.add_header('Accept', 'application/json')
+			req.add_header("Content-type", "application/x-www-form-urlencoded")
+			req.add_header('Authorization', userData)
+			try:
+				rtn = urllib2.urlopen(req,timeout = 1)
+				list = []
+				count = 0
+				for line in rtn.read().splitlines():
+					if not (line == "Present bans:"):
+						# 5 last bans by cluter
+						if count < 5:
+							list.append(line.split()[2]+" "+line.split()[3]+" "+line.split()[4])
+							count = count+1
+						else:
+							count = 0
+							break
+				return list
+			except URLError, e:
+				return e.reason
