@@ -6,7 +6,11 @@ Varnish Administration GUI
 
 Python + Flask + Bootstrap (layout)
 
-Varnish 3.X 4.X
+Required
+========
+
+* Varnish 3.x 4.x
+* Varnish-agent 2.2+
 
 To Do
 =====
