@@ -1,14 +1,13 @@
 Varnish Administration GUI 
 ==========================
 
-* VCL Editor (need some tests!, but Its working fine!)
+* VCL Editor
 * Purge
-
-Python + Flask + Bootstrap (layout)
 
 Required
 ========
 
+* Python + Flask
 * Varnish 3.x 4.x
 * Varnish-agent 2.2+
 
