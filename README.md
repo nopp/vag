@@ -18,7 +18,6 @@ To Do
 * Authentication
 * User groups
 * Graphics
-* List "last bans"
 * Save VCL edited on MySQL.
 
 How to use
