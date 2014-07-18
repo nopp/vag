@@ -35,7 +35,7 @@ class vsApi():
 				rtn = urllib2.urlopen(req,timeout = 2)
 				return rtn.read()
 			except URLError, e:
-				return e.read()	
+				return e.reason
 
 		def vcl_show(self,ipAgent,vclName):
 			uName = config.get('conf','vaName')
@@ -76,7 +76,7 @@ class vsApi():
 				rtn = res.read()+" "+self.vcl_use(ipAgent,vclName)
 				return rtn
 			except URLError, e:
-				return e.read()
+				return e.reason
 
 		def vcl_use(self,ipAgent,vclName):
 			uName = config.get('conf','vaName')
