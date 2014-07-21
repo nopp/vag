@@ -41,6 +41,8 @@ class Vag:
 						clusters.append(cst)
 					c.close()
 					return clusters
+				else:
+				return "Please register your clusters!"
 			except:
 				return "Please register your clusters!"
 
