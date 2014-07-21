@@ -11,6 +11,10 @@ from lib.vag import *
 import json
 import ast
 import time
+import ConfigParser
+
+config = ConfigParser.RawConfigParser()
+config.read('config.cfg')
 
 app = Flask(__name__)
 app.secret_key = 'aYG>.k*((*@jjkh>>'
@@ -83,4 +87,6 @@ def sendVcl():
 	return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='172.16.19.130',port=80,debug=True)
+	vaIp = config.get('conf','vaIp')
+	vaPort = config.get('conf','vaPort')
+	app.run(host=vaIp,port=int(vaPort),debug=True)
