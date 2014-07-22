@@ -133,7 +133,6 @@ class Vag:
 					for varnish in v.fetchall():
 						vsapi = vsApi()
 						vsstatus =  vsapi.vcl_status(varnish[2])
-						print vsstatus
 						if "running" in vsstatus:
 							rtnstatus = "OK"
 						else:
