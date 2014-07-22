@@ -7,6 +7,20 @@ config = ConfigParser.RawConfigParser()
 config.read('config.cfg')
 
 class vsApi():
+		
+		def vcl_status(self,ipAgent):
+			uName = config.get('conf','vaName')
+			pWord = config.get('conf','vaPass')
+			userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
+			req = urllib2.Request('http://'+ipAgent+':6085/status/')
+			req.add_header('Accept', 'application/json')
+			req.add_header("Content-type", "application/x-www-form-urlencoded")
+			req.add_header('Authorization', userData)
+			try:
+				rtn = urllib2.urlopen(req,timeout = 2)
+				return rtn.read()
+			except URLError, e:
+				return e.reason
 
 		def lastVCL(self,ipAgent):
 			uName = config.get('conf','vaName')
