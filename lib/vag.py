@@ -131,7 +131,14 @@ class Vag:
 					aux = []
 					v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
 					for varnish in v.fetchall():
-						aux.append(varnish[1]+" ("+varnish[2]+")")
+						vsapi = vsApi()
+						vsstatus =  vsapi.vcl_status(varnish[2])
+						print vsstatus
+						if "running" in vsstatus:
+							rtnstatus = "OK"
+						else:
+							rtnstatus = "DESLIGADO"
+						aux.append(varnish[1]+" ("+varnish[2]+")"+"["+rtnstatus+"]")
 					resultClusters[cluster[1]] = aux
 			return resultClusters
 
