@@ -87,10 +87,6 @@ def sendVcl():
 	return redirect(url_for('index'))
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    app.run(host='127.0.0.1',port=5000,debug=True)
-=======
 	vaIp = config.get('conf','vaIp')
 	vaPort = config.get('conf','vaPort')
 	app.run(host=vaIp,port=int(vaPort),debug=True)
->>>>>>> 91c2890dce91f5e908c877771837c2d055e99d6e
