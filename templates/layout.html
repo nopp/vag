@@ -10,7 +10,7 @@
     <title>VAG - Varnish Administration GUI</title>
 
     <!-- Bootstrap core CSS -->
-   	<!-- script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.close').click(function(){
@@ -18,7 +18,7 @@
                $(".alert").hide(); 
             });
         })
-    </script -->
+    </script>
     <link href="static/bs/css/bootstrap.css" rel="stylesheet">
     <link href="static/style.css" rel="stylesheet">
 
@@ -35,6 +35,10 @@
             <li><a href="/register"><i class="fa fa-cog fa-lg"> Register varnish</i></a></li>
             <li><a href="/ban"><i class="fa fa-refresh fa-lg"> BAN</i></a></li>
             <li><a href="/vcl"><i class="fa fa-pencil-square-o fa-lg"> VCL editor</i></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/manage"><i class="fa fa-wrench fa-lg"></i></a></li>
+            <li><a href="/users"><i class="fa fa-users fa-lg"></i></a></li>
           </ul>
         </div>
       </div>

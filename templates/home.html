@@ -8,10 +8,8 @@
 		</div>
 		<div class="panel-body">
 		{% for key,value in clt.iteritems() %}
-			<b>{{ key }}</b><br>
-			{% for v in value %}
-				&nbsp;&nbsp;{{ v }}<br>
-			{% endfor %}
+			<b><i class="fa fa-level-down"></i> {{ key }}</b><br>
+				&nbsp;&nbsp;{% if value[4] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ value[1] }} ({{ value[2] }})<br>
 			<br>	
 		{% endfor %}	
 		</div>

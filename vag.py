@@ -24,6 +24,16 @@ def index():
 	vag = Vag()
 	return render_template('home.html', clt=vag.varnishByCluster())
 
+@app.route("/manage")
+def manage():
+	vag = Vag()
+	return render_template('manage.html', clt=vag.varnishByCluster())
+
+@app.route("/users")
+def users():
+	vag = Vag()
+	return render_template('users.html')
+
 # Register new cluster
 @app.route('/cluster')
 def cluster():

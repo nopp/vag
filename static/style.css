@@ -7,3 +7,11 @@ body {
 	border-bottom: 1px dotted #666666;
 	padding-bottom: 3px;
 }
+
+.fa-vaok {
+	color: #00FF00;
+}
+
+.fa-vanok {
+	color: #FF0000;
+}

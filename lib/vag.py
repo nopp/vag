@@ -137,7 +137,16 @@ class Vag:
 							rtnstatus = "OK"
 						else:
 							rtnstatus = "DESLIGADO"
-						aux.append(varnish[1]+" ("+varnish[2]+")"+"["+rtnstatus+"]")
+						# idVarnish
+						aux.append(varnish[0])
+						# Varnish Name
+						aux.append(varnish[1])
+						# Varnish IP
+						aux.append(varnish[2])
+						# idCluster
+						aux.append(cluster[0])
+						# Varnish Status
+						aux.append(rtnstatus)
 					resultClusters[cluster[1]] = aux
 			return resultClusters
 
