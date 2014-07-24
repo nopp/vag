@@ -1,16 +1,8 @@
-# Flak Module
+#
+# VAG - Varnish Administration GUI
+#
 from flask import *
-
-# VAG Module
 from lib.vag import *
-
-# Varnish Socket API
-# from lib.vsapi import *
-
-# Lib extras
-import json
-import ast
-import time
 import ConfigParser
 
 config = ConfigParser.RawConfigParser()
@@ -19,16 +11,19 @@ config.read('config.cfg')
 app = Flask(__name__)
 app.secret_key = 'aYG>.k*((*@jjkh>>'
 
+# Index
 @app.route("/")
 def index():
 	vag = Vag()
 	return render_template('home.html', clt=vag.varnishByCluster())
 
+# Manage Cluster/Varnish
 @app.route("/manage")
 def manage():
 	vag = Vag()
 	return render_template('manage.html', clt=vag.varnishByCluster())
 
+# Manage users
 @app.route("/users")
 def users():
 	vag = Vag()
@@ -76,6 +71,7 @@ def banUrl():
 	flash(rtn)
 	return redirect(url_for('index'))
 
+# VCL Edit
 @app.route('/vcl')
 def vcl():
 	vag = Vag()
