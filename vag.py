@@ -71,6 +71,21 @@ def banUrl():
 	flash(rtn)
 	return redirect(url_for('index'))
 
+# Varnish Edit
+@app.route('/varnish/<idVarnish>', methods=['GET'])
+def varnish(idVarnish):
+	if request.method == 'GET':
+		vag = Vag()
+		return render_template('varnish.html', data=vag.varnishInfo(idVarnish))
+
+@app.route('/varnish_edit', methods=['POST'])
+def varnishEdit():
+	if request.method == 'POST':
+		vag = Vag()
+		rtn = vag.editVarnish(request.form['varnishID'],request.form['name'],request.form['ip'])
+	flash(rtn)
+	return redirect(url_for('index'))
+
 # VCL Edit
 @app.route('/vcl')
 def vcl():
