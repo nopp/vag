@@ -31,7 +31,7 @@ class vsApi():
 		uName = config.get('conf','vaName')
 		pWord = config.get('conf','vaPass')
 		userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
-		req = urllib2.Request('http://172.16.253.40:6085/vcl/')
+		req = urllib2.Request('http://'+ipAgent+':6085/vcl/')
 		req.add_header('Accept', 'application/json')
 		req.add_header("Content-type", "application/x-www-form-urlencoded")
 		req.add_header('Authorization', userData)
