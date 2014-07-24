@@ -11,6 +11,14 @@ Required
 * Varnish 3.x 4.x
 * Varnish-agent 2.2+
 
+knowledge "issue"
+=================
+If you have this "issue" on save VCL "VCL stored in varnish OK, but persisting to disk failed.", you need to set DAEMON_OPTS:
+
+-n "/tmp" \
+
+Because Varnish try to save in temporary directory /tmp and don't have access to do this.
+
 To Do
 =====
 
