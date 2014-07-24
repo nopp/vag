@@ -82,7 +82,7 @@ def vclEdit():
 	if request.method == 'POST':
 		vag = Vag()
 		vclData = vag.returnVcl(vag.returnVclActive(request.form['cluster']),request.form['cluster'])
-		return render_template('vcl_edit.html', vcl_data=vclData, clusterID=request.form['cluster'])
+		return render_template('vcl_edit.html', vcl_name=vag.returnVclActive(request.form['cluster']), vcl_data=vclData, clusterID=request.form['cluster'])
 
 @app.route('/send_vcl', methods=['POST'])
 def sendVcl():
