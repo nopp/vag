@@ -2,16 +2,30 @@
 {% block body %}
 	<h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
 	<br>
-	<div class="panel panel-primary">
-		<div class="panel-heading">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
 					<h3 class="panel-title">Registered Varnish's by Cluster <a href="/manage"><i class="fa fa-wrench fa-lg"></i></a></h3>
+				</div>
+				<div class="panel-body">
+				{% for key,value in clt.iteritems() %}
+					<b><i class="fa fa-level-down"></i> {{ key }}</b><br>
+						&nbsp;&nbsp;{% if value[4] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ value[1] }} ({{ value[2] }})<br>
+					<hr>	
+				{% endfor %}	
+				</div>
+			</div>
 		</div>
-		<div class="panel-body">
-		{% for key,value in clt.iteritems() %}
-			<b><i class="fa fa-level-down"></i> {{ key }}</b><br>
-				&nbsp;&nbsp;{% if value[4] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ value[1] }} ({{ value[2] }})<br>
-			<br>	
-		{% endfor %}	
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Stats</h3>
+				</div>
+				<div class="panel-body">
+				:)	
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}
