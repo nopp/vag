@@ -86,6 +86,44 @@ class Vag:
 		except:
 			return "Error to connect on MySQL"
 
+	# Return varnish info
+	def varnishInfo(self,idVarnish):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from varnish where id = %s',[idVarnish])
+			total = c.fetchone()[0]
+			if total == 1:
+				aux = []
+				c.execute('select * from varnish where id = %s',[idVarnish])
+				vaInfo = c.fetchone()
+				# Varnish ID
+				aux.append(vaInfo[0])
+				# Varnish Name
+				aux.append(vaInfo[1])
+				# Varnish IP
+				aux.append(vaInfo[2])
+				# Cluster ID
+				aux.append(vaInfo[3])
+			return aux
+		except:
+			return "This varnish doesn't exists!"
+
+	# Edit varnish
+	def editVarnish(self,idVarnish,name,ip):
+		con = self.connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where id = %s',[idVarnish])
+		total = c.fetchone()[0]
+		if total >= 1:
+			c.execute('update varnish set name = %s, ip = %s where id = %s',[name,ip,idVarnish])
+			con.commit()
+			c.close()
+			return "Varnish edited!"
+		else:
+			c.close()
+			return "VCL on "+vns[1]+" fail!"
+
 	# Register new cluster
 	def addCluster(self,name):
 		try:
