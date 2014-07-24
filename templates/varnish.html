@@ -1,0 +1,16 @@
+    {% extends "layout.html" %}
+    {% block body %}
+        <h2 class="linha"><i class="fa fa-cog"> Edit varnish</i></h2>
+        <form action="/varnish_edit" method="POST">
+				<input type="hidden" name="varnishID" value="{{ data[0] }}">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input id="name" name="name" type="text" class="form-control" value="{{ data[1] }}">
+                </div>
+				<div class="form-group">
+					<label for="ip">IP</label>
+					<input id="ip" name="ip" type="text" class="form-control" value="{{ data[2] }}">
+				</div>
+				<button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+	{% endblock %}
