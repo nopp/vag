@@ -11,9 +11,9 @@ Required
 * Varnish 3.x 4.x
 * Varnish-agent 2.2+
 
-knowledge "issue"
+knowledge "error"
 =================
-If you have this "issue" on save VCL "VCL stored in varnish OK, but persisting to disk failed.", you need to set DAEMON_OPTS:
+If you have this "error" on save VCL "VCL stored in varnish OK, but persisting to disk failed.", you need to set DAEMON_OPTS:
 
 -n "/tmp" \
 
