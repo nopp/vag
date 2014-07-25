@@ -86,6 +86,15 @@ def varnishEdit():
 	flash(rtn)
 	return redirect(url_for('index'))
 
+# Delete varnish
+@app.route('/delete_varnish/<idVarnish>', methods=['GET'])
+def deleteVarnish(idVarnish):
+	if request.method == 'GET':
+		vag = Vag()
+		rtn = vag.deleteVarnish(idVarnish)
+	flash(rtn)
+	return redirect(url_for('index'))
+
 # VCL Edit
 @app.route('/vcl')
 def vcl():
