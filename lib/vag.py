@@ -124,6 +124,21 @@ class Vag:
 			c.close()
 			return "VCL on "+vns[1]+" fail!"
 
+	# Delete varnish
+	def deleteVarnish(self,idVarnish):
+		con = self.connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where id = %s',[idVarnish])
+		total = c.fetchone()[0]
+		if total >= 1:
+			c.execute('delete from varnish where id = %s',[idVarnish])
+			con.commit()
+			c.close()
+			return "Varnish deleted!"
+		else:
+			c.close()
+			return "Varnish delete fail!"
+
 	# Register new cluster
 	def addCluster(self,name):
 		try:
@@ -174,6 +189,7 @@ class Vag:
 			for cluster in c.fetchall():
 				aux = []
 				v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
+				resultClusters[cluster[1]] = []
 				for varnish in v.fetchall():
 					vsapi = vsApi()
 					vsstatus =  vsapi.vcl_status(varnish[2])
@@ -191,7 +207,8 @@ class Vag:
 					aux.append(cluster[0])
 					# Varnish Status
 					aux.append(rtnstatus)
-				resultClusters[cluster[1]] = aux
+					resultClusters[cluster[1]].append(aux)
+					aux = []
 		return resultClusters
 
 	# Return last bans
