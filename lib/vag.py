@@ -139,6 +139,23 @@ class Vag:
 			c.close()
 			return "Varnish delete fail!"
 
+	# Delete cluster
+	def deleteCluster(self,idCluster):
+		con = self.connect()
+		c = con.cursor()
+		c.execute('select count(*) from cluster where id = %s',[idCluster])
+		total = c.fetchone()[0]
+		if total >= 1:
+			c.execute('delete from varnish where id_cluster = %s',[idCluster])
+			con.commit()
+			c.execute('delete from cluster where id = %s',[idCluster])
+			con.commit()
+			c.close()
+			return "Cluster deleted!"
+		else:
+			c.close()
+			return "Cluster delete fail!"
+
 	# Register new cluster
 	def addCluster(self,name):
 		try:
