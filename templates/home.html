@@ -11,7 +11,9 @@
 				<div class="panel-body">
 				{% for key,value in clt.iteritems() %}
 					<b><i class="fa fa-level-down"></i> {{ key }}</b><br>
-						&nbsp;&nbsp;{% if value[4] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ value[1] }} ({{ value[2] }})<br>
+					{% for va in value %}
+						&nbsp;&nbsp;{% if va[4] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ va[1] }} ({{ va[2] }})<br>
+					{% endfor %}
 					<hr>	
 				{% endfor %}	
 				</div>
