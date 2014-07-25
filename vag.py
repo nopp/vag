@@ -42,6 +42,15 @@ def registerCluster():
 	flash(rtn)
 	return redirect(url_for('index'))
 
+# Delete cluster
+@app.route('/delete_cluster/<idCluster>', methods=['GET'])
+def deleteCluster(idCluster):
+	if request.method == 'GET':
+		vag = Vag()
+		rtn = vag.deleteCluster(idCluster)
+	flash(rtn)
+	return redirect(url_for('index'))
+
 # Register new varnish server
 @app.route('/register')
 def register():
