@@ -43,11 +43,12 @@ def registerCluster():
 	return redirect(url_for('index'))
 
 # Delete cluster
-@app.route('/delete_cluster/<idCluster>', methods=['GET'])
-def deleteCluster(idCluster):
+@app.route('/delete_cluster/<clusterName>', methods=['GET'])
+def deleteCluster(clusterName):
 	if request.method == 'GET':
 		vag = Vag()
-		rtn = vag.deleteCluster(idCluster)
+		cID = vag.returnClusterID(clusterName)
+		rtn = vag.deleteCluster(cID)
 	flash(rtn)
 	return redirect(url_for('index'))
 
