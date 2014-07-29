@@ -1,6 +1,7 @@
 #
 # VAG - Varnish Administration GUI
 #
+import json
 import urllib
 import MySQLdb
 import commands
@@ -307,3 +308,12 @@ class Vag:
 		else:
 			c.close()
 			return "VCL on "+vns[1]+" fail!"
+
+
+	def clusterStats(self):
+		vsapi = vsApi()
+		juca = vsapi.varnish_stats()
+		print juca
+		opa = json.loads(juca)
+		aux = str(opa["cache_hit"]["value"])+","+str(opa["cache_miss"]["value"])+","+str(opa["backend_fail"]["value"])
+		return aux
