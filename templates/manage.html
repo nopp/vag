@@ -3,7 +3,7 @@
 	<h2 class="linha"><i class="fa fa-wrench"> Manage Cluster/Varnish</i></h2>
 	<br>
 	        {% for key,value in clt.iteritems() %}
-            <i class="fa fa-level-down"></i> <b>{{ key }}</b> <a href="/delete_cluster/"><i class="fa fa-trash-o"></i></a><br>
+            <i class="fa fa-level-down"></i> <b>{{ key }}</b> <a href="/delete_cluster/{{ key }}"><i class="fa fa-trash-o"></i></a><br>
 				{% for va in value %}
 					&nbsp;&nbsp;<a class="fa fa-angle-right"></a> {{ va[1] }} {{ va[2] }} <a href="/varnish/{{ va[0] }}"><i class="fa fa-pencil"></i></a><a href="/delete_varnish/{{ va[0] }}"> <i class="fa fa-trash-o"></i></a><br>
 				{% endfor %}
