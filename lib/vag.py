@@ -68,6 +68,25 @@ class Vag:
 		except:
 			return "Error to connect on sqlite"
 
+	# Return cluter id (with cluster name)
+	def returnClusterID(self,clusterName):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from cluster where name = %s',[clusterName])
+			total = c.fetchone()[0]
+			varnishs = []
+			if total >= 1:
+				c.execute('select * from cluster where name = %s',[clusterName])
+				cID = c.fetchone()[0]
+				c.close()	
+				return cID
+			else:
+				c.close()
+				return "Cluster "+clusterName+" doens't exists!"
+		except:
+			return "Error to connect on sqlite"
+
 	# Register new varnish
 	def addVarnish(self,name,ip,cluster):
 		try:
@@ -141,20 +160,23 @@ class Vag:
 
 	# Delete cluster
 	def deleteCluster(self,idCluster):
-		con = self.connect()
-		c = con.cursor()
-		c.execute('select count(*) from cluster where id = %s',[idCluster])
-		total = c.fetchone()[0]
-		if total >= 1:
-			c.execute('delete from varnish where id_cluster = %s',[idCluster])
-			con.commit()
-			c.execute('delete from cluster where id = %s',[idCluster])
-			con.commit()
-			c.close()
-			return "Cluster deleted!"
-		else:
-			c.close()
-			return "Cluster delete fail!"
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from cluster where id = %s',[idCluster])
+			total = c.fetchone()[0]
+			if total >= 1:
+				c.execute('delete from varnish where id_cluster = %s',[idCluster])
+				con.commit()
+				c.execute('delete from cluster where id = %s',[idCluster])
+				con.commit()
+				c.close()
+				return "Cluster deleted!"
+			else:
+				c.close()
+				return "Cluster delete fail!"
+		except:
+			return "Pau ao remover cluster"
 
 	# Register new cluster
 	def addCluster(self,name):
@@ -220,8 +242,6 @@ class Vag:
 					aux.append(varnish[1])
 					# Varnish IP
 					aux.append(varnish[2])
-					# idCluster
-					aux.append(cluster[0])
 					# Varnish Status
 					aux.append(rtnstatus)
 					resultClusters[cluster[1]].append(aux)
