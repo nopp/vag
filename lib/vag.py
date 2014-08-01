@@ -313,7 +313,12 @@ class Vag:
 	def clusterStats(self):
 		vsapi = vsApi()
 		juca = vsapi.varnish_stats()
-		print juca
-		opa = json.loads(juca)
-		aux = str(opa["cache_hit"]["value"])+","+str(opa["cache_miss"]["value"])+","+str(opa["backend_fail"]["value"])
-		return aux
+		try:
+			opa = json.loads(juca)
+			porc = 100-((100*opa["cache_miss"]["value"])/opa["cache_hit"]["value"])
+			aux = str(opa["cache_hit"]["value"])+","+str(opa["cache_miss"]["value"])+" "+str(porc)+"%"
+			total = opa["cache_hit"]["value"]+opa["cache_miss"]["value"]
+			print "miss "+str(opa["cache_miss"]["value"])
+			return str(total)+","+str(opa["cache_miss"]["value"]) 
+		except:
+			return "Erro ao trazer json"
