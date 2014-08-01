@@ -2,6 +2,7 @@
 # VAG - Varnish Administration GUI
 #
 import re
+import json
 import urllib2
 import ConfigParser
 from urllib2 import Request, urlopen, URLError
@@ -170,7 +171,7 @@ class vsApi():
 		uName = config.get('conf','vaName')
 		pWord = config.get('conf','vaPass')
 		userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
-		req = urllib2.Request('http://172.16.18.72:6085/stats')
+		req = urllib2.Request('http://127.0.0.1:6085/stats')
 		req.add_header('Accept', 'application/json')
 		req.add_header("Content-type", "application/x-www-form-urlencoded")
 		req.add_header('Authorization', userData)
@@ -178,4 +179,4 @@ class vsApi():
 			rtn = urllib2.urlopen(req,timeout = 2)
 			return rtn.read()
 		except URLError, e:
-			return e.read()
+			return e.reason
