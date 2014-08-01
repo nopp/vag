@@ -1,5 +1,53 @@
 {% extends "layout.html" %}
 {% block body %}
+	<script src="/static/js/jquery.cookie.js"></script>  
+    <style>
+	@font-face {
+    	font-family: "digital-7";
+    	src: url('/static/font/digital-7.ttf');
+	}
+
+	#hit-perc, #req-sec, #hit-req {
+    	font-family: "digital-7";
+    	font-size: 40px;
+		background-color: #222;
+		color: #77FF00;
+		text-align: center;
+	}
+    </style>
+	<script type="text/javascript">
+	var aux = null;
+	$(document).ready(function () {
+		$.get( "/cluster_stats/varnish_carlos01", function( data ) {
+			var teste = data.split(",")
+			$.cookie('hit_old', teste[0]);
+			$.cookie('miss_old', teste[1]);
+		});
+		var auto_refresh = setInterval(
+			function () {
+				$.get( "/cluster_stats/varnish_carlos01", function( data ) {
+					var teste = data.split(",")
+					$.cookie('hit', teste[0]);
+					$.cookie('miss', teste[1]);
+					$('#hit').text($.cookie('hit'));
+					$('#hit_old').text($.cookie('hit_old'));
+					$('#miss').text($.cookie('miss'));
+					$('#miss_old').text($.cookie('miss_old'));
+					var total = 100-((100*($.cookie('miss')-$.cookie('miss_old')))/($.cookie('hit')-$.cookie('hit_old')));
+					var reqSec = ($.cookie('miss')-$.cookie('miss_old'))+($.cookie('hit')-$.cookie('hit_old'));
+					var hitReq = ($.cookie('hit')-$.cookie('hit_old'));
+					if (isNaN(total)) { total = 0 };
+					if (isNaN(reqSec)) { reqSec = 0 };
+					if (isNaN(hitReq)) { hitReq = 0 };
+					$('#hit-perc').text(total.toFixed(0)+" %");
+					$('#req-sec').text(reqSec);
+					$('#hit-req').text(hitReq);
+					$.cookie('hit_old', teste[0]);
+					$.cookie('miss_old', teste[1]);
+				});
+			}, 1000)
+	});
+	</script>
 	<h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
 	<br>
 	<div class="row">
@@ -22,19 +70,32 @@
 		<div class="col-md-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Varnish Hit/Miss</h3>
+					<h3 class="panel-title">Varnish Statistics</h3>
 				</div>
 				<div class="panel-body">
-    <script type="text/javascript">
-	$.get( "/cluster_stats/varnish_carlos01", function( data ) {
-		$('#stat').text(data)
- 	});
-	var auto_refresh = setInterval(
-		function () {
-			$('#stat').load('/cluster_stats/varnish_carlos01').fadeIn("slow");
-		}, 5000)
-    </script>
-				<pre id="stat"></pre>
+					<div class="row">
+						<div class="col-md-4">
+								<div class="panel panel-default">
+								  <div class="panel-heading">Efficiency %</div>
+								  <div id="hit-perc" class="panel-body">
+								  </div>
+								</div>
+						</div>
+						<div class="col-md-4">
+								<div class="panel panel-default">
+								  <div class="panel-heading">Requests/sec</div>
+								  <div id="req-sec" class="panel-body">
+								  </div>
+								</div>
+						</div>
+						<div class="col-md-4">
+								<div class="panel panel-default">
+								  <div class="panel-heading">Hit Requests</div>
+								  <div id="hit-req" class="panel-body">
+								  </div>
+								</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
