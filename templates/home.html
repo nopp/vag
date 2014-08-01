@@ -26,24 +26,24 @@
 		var auto_refresh = setInterval(
 			function () {
 				$.get( "/cluster_stats/varnish_carlos01", function( data ) {
-					var teste = data.split(",")
-					$.cookie('hit', teste[0]);
-					$.cookie('miss', teste[1]);
-					$('#hit').text($.cookie('hit'));
-					$('#hit_old').text($.cookie('hit_old'));
-					$('#miss').text($.cookie('miss'));
-					$('#miss_old').text($.cookie('miss_old'));
-					var total = 100-((100*($.cookie('miss')-$.cookie('miss_old')))/($.cookie('hit')-$.cookie('hit_old')));
-					var reqSec = ($.cookie('miss')-$.cookie('miss_old'))+($.cookie('hit')-$.cookie('hit_old'));
-					var hitReq = ($.cookie('hit')-$.cookie('hit_old'));
-					if (isNaN(total)) { total = 0 };
-					if (isNaN(reqSec)) { reqSec = 0 };
-					if (isNaN(hitReq)) { hitReq = 0 };
-					$('#hit-perc').text(total.toFixed(0)+" %");
-					$('#req-sec').text(reqSec);
-					$('#hit-req').text(hitReq);
-					$.cookie('hit_old', teste[0]);
-					$.cookie('miss_old', teste[1]);
+                    var teste = data.split(",")
+                    $.cookie('hit', teste[0]);
+                    $.cookie('miss', teste[1]);
+                    $('#hit').text($.cookie('hit'));
+                    $('#hit_old').text($.cookie('hit_old'));
+                    $('#miss').text($.cookie('miss'));
+                    $('#miss_old').text($.cookie('miss_old'));
+                    var reqSec = ($.cookie('miss')-$.cookie('miss_old'))+($.cookie('hit')-$.cookie('hit_old'));
+                    var hitReq = ($.cookie('hit')-$.cookie('hit_old'));
+                    var total = 100*hitReq/reqSec 
+                    if (isNaN(total)) { total = 0 };
+                    if (isNaN(reqSec)) { reqSec = 0 };
+                    if (isNaN(hitReq)) { hitReq = 0 };
+                    $('#hit-perc').text(total.toFixed(0)+" %");
+                    $('#req-sec').text(reqSec);
+                    $('#hit-req').text(hitReq);
+                    $.cookie('hit_old', teste[0]);
+                    $.cookie('miss_old', teste[1]);
 				});
 			}, 1000)
 	});
