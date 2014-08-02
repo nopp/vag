@@ -1,5 +1,5 @@
-Varnish Administration GUI 
-==========================
+Varnish Administration GUI (Open source VAC alternative)
+========================================================
 
 * VCL Editor (vim like :))
 * Purge
