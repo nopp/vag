@@ -1,8 +1,11 @@
-Varnish Administration GUI (Open source VAC alternative)
-========================================================
+Varnish Administration GUI 
+(Open source VAC alternative)
+=============================
 
 * VCL Editor (vim like :))
 * Purge
+
+Obs:. I'm not a programmer :), do not expect a good code!
 
 Required
 ========
@@ -14,9 +17,9 @@ Required
 To Do
 =====
 
-* Authentication
-* User groups
-* Graphics
+* Authentication.
+* User groups.
+* Graphics/Statistics (under development \o/)
 * Save VCL edited on MySQL.
 
 How to use
