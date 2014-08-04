@@ -216,37 +216,65 @@ class Vag:
 			return rtn
 
 	# Return all varnish's by cluster
-	def varnishByCluster(self):
+	def varnishByCluster(self,name=None):
 		con = self.connect()
 		con2 = self.connect()
 		c = con.cursor()
 		v = con2.cursor()
-		c.execute('select count(*) from cluster')
-		total = c.fetchone()[0]
-		resultClusters = {}
-		if total >= 1:
-			c.execute('select * from cluster ORDER by name ASC')
-			for cluster in c.fetchall():
-				aux = []
-				v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
-				resultClusters[cluster[1]] = []
-				for varnish in v.fetchall():
-					vsapi = vsApi()
-					vsstatus =  vsapi.vcl_status(varnish[2])
-					if "running" in vsstatus:
-						rtnstatus = "OK"
-					else:
-						rtnstatus = "DESLIGADO"
-					# idVarnish
-					aux.append(varnish[0])
-					# Varnish Name
-					aux.append(varnish[1])
-					# Varnish IP
-					aux.append(varnish[2])
-					# Varnish Status
-					aux.append(rtnstatus)
-					resultClusters[cluster[1]].append(aux)
+		if name is None:
+			c.execute('select count(*) from cluster')
+			total = c.fetchone()[0]
+			resultClusters = {}
+			if total >= 1:
+				c.execute('select * from cluster ORDER by name ASC')
+				for cluster in c.fetchall():
 					aux = []
+					v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
+					resultClusters[cluster[1]] = []
+					for varnish in v.fetchall():
+						vsapi = vsApi()
+						vsstatus =  vsapi.vcl_status(varnish[2])
+						if "running" in vsstatus:
+							rtnstatus = "OK"
+						else:
+							rtnstatus = "DESLIGADO"
+						# idVarnish
+						aux.append(varnish[0])
+						# Varnish Name
+						aux.append(varnish[1])
+						# Varnish IP
+						aux.append(varnish[2])
+						# Varnish Status
+						aux.append(rtnstatus)
+						resultClusters[cluster[1]].append(aux)
+						aux = []
+		else: 
+			c.execute('select count(*) from cluster where name = %s',[name])
+			total = c.fetchone()[0]
+			resultClusters = {}
+			if total >= 1:
+				c.execute('select * from cluster where name = %s ORDER by name ASC',[name])
+				for cluster in c.fetchall():
+					aux = []
+					v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
+					resultClusters[cluster[1]] = []
+					for varnish in v.fetchall():
+						vsapi = vsApi()
+						vsstatus =  vsapi.vcl_status(varnish[2])
+						if "running" in vsstatus:
+							rtnstatus = "OK"
+						else:
+							rtnstatus = "DESLIGADO"
+						# idVarnish
+						aux.append(varnish[0])
+						# Varnish Name
+						aux.append(varnish[1])
+						# Varnish IP
+						aux.append(varnish[2])
+						# Varnish Status
+						aux.append(rtnstatus)
+						resultClusters[cluster[1]].append(aux)
+						aux = []
 		return resultClusters
 
 	# Return last bans
@@ -310,15 +338,19 @@ class Vag:
 			return "VCL on "+vns[1]+" fail!"
 
 
-	def clusterStats(self):
-		vsapi = vsApi()
-		juca = vsapi.varnish_stats()
-		try:
-			opa = json.loads(juca)
-			porc = 100-((100*opa["cache_miss"]["value"])/opa["cache_hit"]["value"])
-			aux = str(opa["cache_hit"]["value"])+","+str(opa["cache_miss"]["value"])+" "+str(porc)+"%"
-			total = opa["cache_hit"]["value"]+opa["cache_miss"]["value"]
-			print "miss "+str(opa["cache_miss"]["value"])
-			return str(total)+","+str(opa["cache_miss"]["value"]) 
-		except:
-			return "Erro ao trazer json"
+	def clusterStats(self,idCluster):
+		con = self.connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where id_cluster = %s',[idCluster])
+		total = c.fetchone()[0]
+		totalVa = 0;
+		totalVaMiss = 0;
+		if total >= 1:
+			c.execute('select * from varnish where id_cluster = %s',[idCluster])
+			for vns in c.fetchall():
+				vsapi = vsApi()
+				vaStats = vsapi.varnish_stats(vns[2])
+				rtn = json.loads(vaStats)
+				totalVa = rtn["cache_hit"]["value"]+rtn["cache_miss"]["value"]+totalVa
+				totalVaMiss = rtn["cache_miss"]["value"]+totalVaMiss
+			return str(totalVa)+","+str(totalVaMiss) 
