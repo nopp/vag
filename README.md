@@ -1,8 +1,11 @@
 Varnish Administration GUI 
-==========================
+=============================
+(Open source VAC alternative)
 
 * VCL Editor (vim like :))
 * Purge
+
+Obs:. I'm not a programmer :), do not expect a good code!
 
 Required
 ========
@@ -14,9 +17,9 @@ Required
 To Do
 =====
 
-* Authentication
-* User groups
-* Graphics
+* Authentication.
+* User groups.
+* Graphics/Statistics (under development \o/)
 * Save VCL edited on MySQL.
 
 How to use
@@ -30,8 +33,8 @@ http://ip:5010
 
 Screenshots
 ==========
-![](http://i57.tinypic.com/scynox.png)
+![](http://s10.postimg.org/s56rmx6ux/Screen_Shot_2014_08_01_at_11_12_19_PM.png)
 ![](http://i62.tinypic.com/cryxj.png)
-![](http://i58.tinypic.com/2z7j5lx.png)
+![](http://s30.postimg.org/fh0ryqh1d/Screen_Shot_2014_08_01_at_11_12_02_PM.png)
 ![](http://i60.tinypic.com/2n1f20z.png)
-![](http://s21.postimg.org/vzdv39r47/tela_editor.png)
+![](http://s17.postimg.org/ruhkjvq0f/editor.png)
