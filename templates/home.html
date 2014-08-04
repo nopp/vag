@@ -15,39 +15,6 @@
 		text-align: center;
 	}
     </style>
-	<script type="text/javascript">
-	var aux = null;
-	$(document).ready(function () {
-		$.get( "/cluster_stats/varnish_carlos01", function( data ) {
-			var teste = data.split(",")
-			$.cookie('hit_old', teste[0]);
-			$.cookie('miss_old', teste[1]);
-		});
-		var auto_refresh = setInterval(
-			function () {
-				$.get( "/cluster_stats/varnish_carlos01", function( data ) {
-                    var teste = data.split(",")
-                    $.cookie('hit', teste[0]);
-                    $.cookie('miss', teste[1]);
-                    $('#hit').text($.cookie('hit'));
-                    $('#hit_old').text($.cookie('hit_old'));
-                    $('#miss').text($.cookie('miss'));
-                    $('#miss_old').text($.cookie('miss_old'));
-                    var reqSec = ($.cookie('miss')-$.cookie('miss_old'))+($.cookie('hit')-$.cookie('hit_old'));
-                    var hitReq = ($.cookie('hit')-$.cookie('hit_old'));
-                    var total = 100*hitReq/reqSec 
-                    if (isNaN(total)) { total = 0 };
-                    if (isNaN(reqSec)) { reqSec = 0 };
-                    if (isNaN(hitReq)) { hitReq = 0 };
-                    $('#hit-perc').text(total.toFixed(0)+" %");
-                    $('#req-sec').text(reqSec);
-                    $('#hit-req').text(hitReq);
-                    $.cookie('hit_old', teste[0]);
-                    $.cookie('miss_old', teste[1]);
-				});
-			}, 1000)
-	});
-	</script>
 	<h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
 	<br>
 	<div class="row">
@@ -58,7 +25,7 @@
 				</div>
 				<div class="panel-body">
 				{% for key,value in clt.iteritems() %}
-					<b><i class="fa fa-angle-double-right"></i> {{ key }}</b> <a href="/cluster_stats/{{ key }}"><i class="fa fa-bar-chart-o"></i></a><br>
+					<b><i class="fa fa-angle-double-right"></i> {{ key }}</b> <a href="/cluster_info/{{ key }}"><i class="fa fa-bar-chart-o"></i></a><br>
 					{% for va in value %}
 						&nbsp;&nbsp;{% if va[3] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ va[1] }} ({{ va[2] }})<br>
 					{% endfor %}
@@ -70,32 +37,11 @@
 		<div class="col-md-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Varnish Statistics</h3>
+					<h3 class="panel-title">VAG Info</h3>
 				</div>
 				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-4">
-								<div class="panel panel-default">
-								  <div class="panel-heading">Efficiency %</div>
-								  <div id="hit-perc" class="panel-body">
-								  </div>
-								</div>
-						</div>
-						<div class="col-md-4">
-								<div class="panel panel-default">
-								  <div class="panel-heading">Requests/sec</div>
-								  <div id="req-sec" class="panel-body">
-								  </div>
-								</div>
-						</div>
-						<div class="col-md-4">
-								<div class="panel panel-default">
-								  <div class="panel-heading">Hit Requests</div>
-								  <div id="hit-req" class="panel-body">
-								  </div>
-								</div>
-						</div>
-					</div>
+					Clusters: 3<br>
+					Varnish: 10	
 				</div>
 			</div>
 		</div>
