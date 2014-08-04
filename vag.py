@@ -29,13 +29,19 @@ def users():
 	vag = Vag()
 	return render_template('users.html')
 
+# Cluster
+@app.route("/cluster_info/<clusterName>", methods=['GET'])
+def clusterInfo(clusterName):
+	if request.method == 'GET':
+		vag = Vag()
+		return render_template('cluster_info.html', clt=vag.varnishByCluster(name=clusterName), name=clusterName)
+
 # Cluster stats
 @app.route("/cluster_stats/<clusterName>", methods=['GET'])
 def clusterStats(clusterName):
 	if request.method == 'GET':
 		vag = Vag()
-		#rtn = vag.clusterStats(vag.returnClusterID(clusterName))
-		rtn = vag.clusterStats()
+		rtn = vag.clusterStats(vag.returnClusterID(clusterName))
 		print rtn
 	return rtn
 
