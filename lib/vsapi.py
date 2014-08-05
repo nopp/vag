@@ -142,7 +142,7 @@ class vsApi():
 			for line in rtn.read().splitlines():
 				if not (line == "Present bans:"):
 					# 5 last bans by cluter
-					if count < 5:
+					if count <= 5:
 						list.append(line.split()[2]+" "+line.split()[3]+" "+line.split()[4])
 						count = count+1
 					else:
