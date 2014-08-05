@@ -15,7 +15,9 @@ app.secret_key = 'aYG>.k*((*@jjkh>>'
 @app.route("/")
 def index():
 	vag = Vag()
-	return render_template('home.html', clt=vag.varnishByCluster())
+	totalVA = vag.vagInfo("varnish")
+	totalCL = vag.vagInfo("cluster")
+	return render_template('home.html', clt=vag.varnishByCluster(), totalcl=totalCL, totalva=totalVA)
 
 # Manage Cluster/Varnish
 @app.route("/manage")
