@@ -12,12 +12,14 @@ config.read('config.cfg')
 
 class vsApi():
 
+	# http://ipAgent/action/extra
 	def urlRequest(self,ipAgent,action,extra=None,mtd=None,domain=None):
 		uName = config.get('conf','vaName')
 		pWord = config.get('conf','vaPass')
 		userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
 		if (extra != None):
 			try:
+				# Type of method (POST/PUT)
 				if mtd == "POST":
 					if action == "ban":
 						req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/'+str(extra))
