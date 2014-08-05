@@ -323,7 +323,7 @@ class Vag:
 			vsapi = vsApi()
 			resultVcl = vsapi.vcl_show(result[2],vclName)
 			return resultVcl
-		except:
+		except MySQLdb.Error, e:
 			return "Don't have VCL active on this cluster"
 
 	# Save VCL
