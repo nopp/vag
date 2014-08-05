@@ -42,7 +42,6 @@ def clusterStats(clusterName):
 	if request.method == 'GET':
 		vag = Vag()
 		rtn = vag.clusterStats(vag.returnClusterID(clusterName))
-		print rtn
 	return rtn
 
 # Register new cluster
