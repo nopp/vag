@@ -11,12 +11,6 @@ config = ConfigParser.RawConfigParser()
 config.read('config.cfg')
 
 class vsApi():
-		
-	#def urlibInfo(self):
-	#	uName = config.get('conf','vaName')
-	#	pWord = config.get('conf','vaPass')
-	#	userData = "Basic " + (uName + ":" + pWord).encode("base64").rstrip()
-	#	return userData
 
 	def urlRequest(self,ipAgent,action,extra=None,mtd=None,domain=None):
 		uName = config.get('conf','vaName')
@@ -25,7 +19,10 @@ class vsApi():
 		if (extra != None):
 			try:
 				if mtd == "POST":
-					req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/',str(extra))
+					if action == "ban":
+						req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/'+str(extra))
+					else:
+						req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/',str(extra))
 					req.get_method = lambda: 'POST'
 				elif mtd == "PUT":
 					req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/'+str(extra), data=str(extra))
@@ -131,7 +128,7 @@ class vsApi():
 				rtn = "BAN error: http://"+domain+"/"+uri
 			return rtn
 		except URLError, e:
-			return str(e.reason)
+			return str(e.read())
 
 	# List last 5 bans 
 	def vcl_ban_list(self,ipAgent):
