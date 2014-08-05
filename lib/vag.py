@@ -343,7 +343,8 @@ class Vag:
 			c.close()
 			return "VCL on "+vns[1]+" fail!"
 
-
+	# Return Cluster Stats
+	# Will be sum all values of varnish cluster
 	def clusterStats(self,idCluster):
 		con = self.connect()
 		c = con.cursor()
@@ -360,3 +361,16 @@ class Vag:
 				totalVa = rtn["cache_hit"]["value"]+rtn["cache_miss"]["value"]+totalVa
 				totalVaMiss = rtn["cache_miss"]["value"]+totalVaMiss
 			return str(totalVa)+","+str(totalVaMiss) 
+
+	# Return total of varnish and cluster from DB
+	def vagInfo(self,table):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from '+table)
+			total = c.fetchone()[0]
+			return total
+		except:
+			return "vagInfo - MySQL error"
+
+		
