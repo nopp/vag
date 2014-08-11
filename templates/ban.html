@@ -1,44 +1,48 @@
     {% extends "layout.html" %}
     {% block body %}
-	<script src="/static/js/check_ban.js"></script>
-	<h2 class="linha"><i class="fa fa-refresh"> BAN URL</i></h2>
-    <form class="form-inline" action="url_ban" method="POST">
-		<div class="form-group">
-			<div class="input-group">
-				<div class="input-group-addon">http://</div>
-				<input id="ban_domain" class="form-control" type="text" name="ban_domain" onkeyup="verifyHttp()" />
+	{% if session["vag_group"] == "admin" %}
+			<script src="/static/js/check_ban.js"></script>
+			<h2 class="linha"><i class="fa fa-refresh"> BAN URL</i></h2>
+			<form class="form-inline" action="url_ban" method="POST">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">http://</div>
+						<input id="ban_domain" class="form-control" type="text" name="ban_domain" onkeyup="verifyHttp()" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">/</div>
+						<input id="ban_uri" class="form-control" type="text" name="ban_uri" onkeyup="verifyUri()" />
+					</div>
+				</div>
+				<div class="form-group">
+					<select name="cluster" class="form-control">
+					{% for cst in clusters %}
+						<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+					{% endfor %}
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary">BAN</button>
+			</form>
+			<br>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Last BANs by Cluster</h3>
+				</div>
+				<div class="panel-body">
+				{% for key,value in ban.iteritems() %}
+					<b>{{ key }}</b><br>
+					{% for v in value %}
+						{% for ban in v %}
+							&nbsp;&nbsp;{{ ban }}<br>
+						{% endfor %}
+					{% endfor %}
+					<br>
+				{% endfor %}
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="input-group">
-				<div class="input-group-addon">/</div>
-				<input id="ban_uri" class="form-control" type="text" name="ban_uri" onkeyup="verifyUri()" />
-			</div>
-		</div>
-		<div class="form-group">
-			<select name="cluster" class="form-control">
-        	{% for cst in clusters %}
-        		<option value="{{ cst[0] }}">{{ cst[1] }}</option>
-        	{% endfor %}
-        	</select>
-		</div>
-		<button type="submit" class="btn btn-primary">BAN</button>
-    </form>
-	<br>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Last BANs by Cluster</h3>
-        </div>
-        <div class="panel-body">
-        {% for key,value in ban.iteritems() %}
-            <b>{{ key }}</b><br>
-            {% for v in value %}
-				{% for ban in v %}
-                	&nbsp;&nbsp;{{ ban }}<br>
-            	{% endfor %}
-            {% endfor %}
-            <br>
-        {% endfor %}
-        </div>
-    </div>
+	{% else %}
+		<h2>Restricted area</h2>
+	{% endif %}
     {% endblock %}
