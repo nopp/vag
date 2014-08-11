@@ -31,13 +31,22 @@
           <a class="navbar-brand" href="/"><i class="fa fa-circle-o-notch"></i> VAG</a>
         </div>
         <div class="navbar-collapse collapse">
-           <ul class="nav navbar-nav">
-            <li><a href="/register"><i class="fa fa-cog fa-lg"> Register varnish</i></a></li>
-            <li><a href="/ban"><i class="fa fa-refresh fa-lg"> BAN</i></a></li>
-            <li><a href="/vcl"><i class="fa fa-pencil-square-o fa-lg"> VCL editor</i></a></li>
-          </ul>
+			{% if session["vag_group"] == "view" %}
+					<!-- view menu -->
+				   <ul class="nav navbar-nav">
+					<li><a href="/vcl"><i class="fa fa-pencil-square-o fa-lg"> VCL viewer</i></a></li>
+				  </ul>
+			{% else %}
+					<!-- admin menu -->
+				   <ul class="nav navbar-nav">
+					<li><a href="/register"><i class="fa fa-cog fa-lg"> Register varnish</i></a></li>
+					<li><a href="/ban"><i class="fa fa-refresh fa-lg"> BAN</i></a></li>
+					<li><a href="/vcl"><i class="fa fa-pencil-square-o fa-lg"> VCL editor</i></a></li>
+				  </ul>
+			{% endif %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/users"><i class="fa fa-users fa-lg"></i></a></li>
+            <li><a href="/users"><i class="fa fa-user fa-lg"></i> <b>{{ session["vag_auth"] }}</b></a></li>
+            <li><a href="/logout"><i class="fa fa-sign-out"></i></a></li>
           </ul>
         </div>
       </div>
