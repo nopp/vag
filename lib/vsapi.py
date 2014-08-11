@@ -104,7 +104,7 @@ class vsApi():
 			rtn = res.read()+" "+self.vcl_use(ipAgent,vclName)
 			return rtn
 		except URLError, e:
-			return e.reason
+			return e.read()
 
 	# Active VCL
 	def vcl_use(self,ipAgent,vclName):
