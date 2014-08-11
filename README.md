@@ -31,6 +31,10 @@ python vag.py
 
 http://ip:5010
 
+* Admin user: admin/admin
+* View user: view/view
+
+
 Screenshots
 ==========
 ![](http://rapido.taxi.br/img/tela_home.png)
