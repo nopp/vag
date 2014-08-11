@@ -1,15 +1,19 @@
     {% extends "layout.html" %}
     {% block body %}
-        <h2 class="linha"><i class="fa fa-pencil-square-o"> VCL editor</i></h2>
-		<form action="vcl_edit" method="POST">
-			<div class="form-group">
-				<label for="cluster">Cluster</label>
-				<select name="cluster" class="form-control">
-        		{% for cst in clusters %}
-             		<option value="{{ cst[0] }}">{{ cst[1] }}</option>
-        		{% endfor %}
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Edit</button>
-		</form>
+			{% if session["vag_group"] == "admin" %}
+				<h2 class="linha"><i class="fa fa-pencil-square-o"> VCL {% if session["vag_group"] == "view" %} view {% else %} editor {% endif %}</i></h2>
+				<form action="vcl_edit" method="POST">
+					<div class="form-group">
+						<label for="cluster">Cluster</label>
+						<select name="cluster" class="form-control">
+						{% for cst in clusters %}
+							<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+						{% endfor %}
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">{% if session["vag_group"] == "view" %} View {% else %} Edit {% endif %}</button>
+				</form>
+			{% else %}
+				<h2>Restricted area</h2>
+			{% endif %}
     {% endblock %}
