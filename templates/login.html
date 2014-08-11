@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VAG - Signin</title>
+    <link href="/static/bs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/login.css" rel="stylesheet">
+    <script src="/static/bs/assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="/static/bs/assets/js/ie10-viewport-bug-workaround.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+		<div id="vag">
+			<h2><i class="fa fa-circle-o-notch"> Varnish Administration GUI</i></h2>
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<div class="alert alert-danger" role="alert">
+						{% for message in messages %}
+							{{ message }}
+						{% endfor %}
+					</div>
+				{% endif %}
+			{% endwith %}
+		</div>
+      	<form class="form-signin" role="form" action="/verify" method="POST">
+        	<input id="login" name="login" type="text" class="form-control" placeholder="Login" required autofocus>
+			<input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+        	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+    </div>
+  </body>
+</html>
