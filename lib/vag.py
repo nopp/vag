@@ -395,11 +395,11 @@ class Vag:
 		try:
 			con = self.connect()
 			c = con.cursor()
-			c.execute('select count(*) from user where login = %s and pass = %s',[login,passwd])
+			c.execute('select count(*) from user where login = %s',[login])
 			total = c.fetchone()[0]
 			if total == 1:
-				c.execute('select group from user where login = %s',[login])
-				userGroup = c.fetchone()[0]
+				c.execute('select * from user where login = %s',[login])
+				userGroup = c.fetchone()[3]
 				c.close()
 				return userGroup
 			else:
