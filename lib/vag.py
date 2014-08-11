@@ -374,3 +374,36 @@ class Vag:
 			return "vagInfo - MySQL error"
 
 		
+	# Verify login
+	def verifyLogin(self,login,passwd):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from user where login = %s and pass = %s',[login,passwd])
+			total = c.fetchone()[0]
+			if total == 1:
+				c.close()
+				return True
+			else:
+				c.close()
+				return False
+		except:
+			return False
+
+	# Return group from user
+	def returnGroup(self,login):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from user where login = %s and pass = %s',[login,passwd])
+			total = c.fetchone()[0]
+			if total == 1:
+				c.execute('select group from user where login = %s',[login])
+				userGroup = c.fetchone()[0]
+				c.close()
+				return userGroup
+			else:
+				c.close()
+				return "User "+login+" doesn't exists!"
+		except:
+			return "returnGroup - Error!"
