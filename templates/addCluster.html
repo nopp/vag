@@ -1,12 +1,16 @@
     {% extends "layout.html" %}
     {% block body %}
-        <h2 class="linha"><i class="fa fa-cogs"> Register Cluster</i></h2>
-        <form action="register_cluster" method="POST">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" class="form-control" type="text" name="name" />
-			</div>
-			<br>
-           	<button type="submit" class="btn btn-primary">Register</button>
-        </form>
+		{% if session["vag_group"] == "admin" %}
+				<h2 class="linha"><i class="fa fa-cogs"> Register Cluster</i></h2>
+				<form action="register_cluster" method="POST">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input id="name" class="form-control" type="text" name="name" />
+					</div>
+					<br>
+					<button type="submit" class="btn btn-primary">Register</button>
+				</form>
+		{% else %}
+			<h2>Restricted area</h2>
+		{% endif %}
     {% endblock %}
