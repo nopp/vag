@@ -17,9 +17,7 @@ Required
 To Do
 =====
 
-* Authentication.
-* User groups.
-* Graphics/Statistics (under development \o/)
+* Graphics
 * Save VCL edited on MySQL.
 
 How to use
