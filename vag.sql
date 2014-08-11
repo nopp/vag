@@ -27,3 +27,23 @@ CREATE TABLE IF NOT EXISTS `varnish` (
   `id_cluster` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(200) NOT NULL,
+  `pass` varchar(200) NOT NULL,
+  `group` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `login`, `pass`, `group`) VALUES
+(1, 'admin', 'admin', 'admin'),
+(2, 'view', 'view', 'view');
