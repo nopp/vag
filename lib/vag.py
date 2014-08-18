@@ -177,7 +177,7 @@ class Vag:
 				c.close()
 				return "Cluster delete fail!"
 		except:
-			return "Pau ao remover cluster"
+			return "Cluster delete fail"
 
 	# Register new cluster
 	def addCluster(self,name):
