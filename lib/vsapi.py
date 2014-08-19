@@ -56,7 +56,7 @@ class vsApi():
 			rtn = urllib2.urlopen(req,timeout = 2)
 			return rtn.read()
 		except URLError, e:
-			return e.reason
+			return e.read()
 
 	# Return last VCL added
 	def lastVCL(self,ipAgent):
