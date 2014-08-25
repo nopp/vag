@@ -334,9 +334,10 @@ class Vag:
 		total = c.fetchone()[0]
 		if total >= 1:
 			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+			rtn = ""
 			for vns in c.fetchall():
 				vsapi = vsApi()
-				rtn = vsapi.vcl_save(vns[2],vclConteudo)	
+				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo)+" "
 			c.close()
 			return rtn
 		else:
