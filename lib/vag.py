@@ -305,13 +305,16 @@ class Vag:
 
 	# Return VCL activated
 	def returnVclActive(self,cluster):
-		con = self.connect()
-		c = con.cursor()
-		c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
-		result = c.fetchone()
-		vsapi = vsApi()
-		vclActive = vsapi.vcl_active(result[2])
-		return vclActive
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+			result = c.fetchone()
+			vsapi = vsApi()
+			vclActive = vsapi.vcl_active(result[2])
+			return vclActive
+		except:
+			return "This cluster doesn't have VCL yet!"
 
 	# Return VCL content
 	def returnVcl(self,vclName,idCluster):
