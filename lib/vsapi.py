@@ -3,6 +3,7 @@
 #
 import re
 import json
+import pycurl
 import urllib2
 import ConfigParser
 from urllib2 import Request, urlopen, URLError
@@ -23,9 +24,10 @@ class vsApi():
 				if mtd == "POST":
 					if action == "ban":
 						req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/'+str(extra))
+						req.get_method = lambda: 'POST'
 					else:
 						req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/',str(extra))
-					req.get_method = lambda: 'POST'
+						req.get_method = lambda: 'POST'
 				elif mtd == "PUT":
 					req = urllib2.Request('http://'+ipAgent+':6085/'+action+'/'+str(extra), data=str(extra))
 					req.get_method = lambda: 'PUT'
@@ -122,15 +124,21 @@ class vsApi():
 	# Ban/Purge
 	def vcl_ban(self,ipAgent,domain,uri):
 		try:
-			req = self.urlRequest(ipAgent,"ban",uri,"POST",domain)
-			rtn = urllib2.urlopen(req,timeout = 2)
-			if rtn.code == 200:
-				rtn = "http://"+domain+"/"+uri+" banned!"
-			else:
-				rtn = "BAN error: http://"+domain+"/"+uri
-			return rtn
-		except URLError, e:
-			return str(e.read())
+			uName = config.get('conf','vaName')
+			pWord = config.get('conf','vaPass')
+			aData = uName+":"+pWord
+			postData = "req.http.host ~ "+domain+" && req.url ~ /"+uri
+			c = pycurl.Curl()
+			c.setopt(pycurl.URL, 'http://'+ipAgent+':6085/ban')
+			c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+			c.setopt(pycurl.HTTPHEADER, ['Host: '+str(domain)])
+			c.setopt(pycurl.POST, 1)
+			c.setopt(pycurl.POSTFIELDS, str(postData))
+			c.setopt(pycurl.USERPWD, aData)
+			c.perform()
+			return ipAgent+" Ban OK! "
+		except:
+			return ipAgent+" Ban failed! "
 
 	# List last 5 bans 
 	def vcl_ban_list(self,ipAgent):
@@ -143,7 +151,9 @@ class vsApi():
 				if not (line == "Present bans:"):
 					# 5 last bans by cluter
 					if count < 5:
-						list.append(line.split()[2]+" "+line.split()[3]+" "+line.split()[4])
+						listBans = line.split()[2:]
+						stringBans = ' '.join(listBans)
+						list.append(stringBans)
 						count = count+1
 					else:
 						count = 0
