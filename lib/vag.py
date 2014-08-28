@@ -325,6 +325,7 @@ class Vag:
 			result = c.fetchone()
 			vsapi = vsApi()
 			resultVcl = vsapi.vcl_show(result[2],vclName)
+			# decode here isn't needed, but, if the user put ascii on default.vcl, this will be util
 			return resultVcl.decode('ascii','ignore')
 		except MySQLdb.Error, e:
 			return "Don't have VCL active on this cluster"
@@ -340,6 +341,7 @@ class Vag:
 			rtn = ""
 			for vns in c.fetchall():
 				vsapi = vsApi()
+				# remove all ascii from VCL config
 				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
 			c.close()
 			return rtn
