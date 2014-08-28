@@ -90,7 +90,7 @@ def registerCluster():
 	if "vag_auth" in session:
 		vag = Vag()
 		uGrp = vag.returnGroup(request.form['name'])
-		if uGrp == "admin":
+		if session['vag_group'] == "admin":
 			if request.method == 'POST':
 				vag = Vag()
 				rtn = vag.addCluster(request.form['name'])
@@ -110,7 +110,7 @@ def deleteCluster(clusterName):
 			cID = vag.returnClusterID(clusterName)
 			rtn = vag.deleteCluster(cID)
 		flash(rtn)
-		return redirect(url_for('index'))
+		return redirect(url_for('manage'))
 	else:
 		return redirect(url_for('login'))
 
@@ -151,7 +151,7 @@ def banUrl():
 			vag = Vag()
 			rtn = vag.urlBan(request.form['ban_domain'],request.form['ban_uri'],request.form['cluster'])
 		flash(rtn)
-		return redirect(url_for('index'))
+		return redirect(url_for('purge'))
 	else:
 		return redirect(url_for('login'))
 
@@ -184,7 +184,7 @@ def deleteVarnish(idVarnish):
 			vag = Vag()
 			rtn = vag.deleteVarnish(idVarnish)
 		flash(rtn)
-		return redirect(url_for('index'))
+		return redirect(url_for('manage'))
 	else:
 		return redirect(url_for('login'))
 
