@@ -161,7 +161,7 @@ class vsApi():
 						break
 			return list
 		except URLError, e:
-			return e.reason
+			return e.read()
 
 	# Return varnish stats
 	def varnish_stats(self,ipAgent):
@@ -170,4 +170,4 @@ class vsApi():
 			rtn = urllib2.urlopen(req,timeout = 2)
 			return rtn.read()
 		except URLError, e:
-			return e.reason
+			return e.read()
