@@ -340,7 +340,7 @@ class Vag:
 			rtn = ""
 			for vns in c.fetchall():
 				vsapi = vsApi()
-				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo)+" "
+				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo)
 			c.close()
 			return rtn
 		else:
@@ -360,6 +360,7 @@ class Vag:
 			c.execute('select * from varnish where id_cluster = %s',[idCluster])
 			for vns in c.fetchall():
 				vsapi = vsApi()
+				# Check if agent is On-line
 				vaStats = vsapi.varnish_stats(vns[2])
 				rtn = json.loads(vaStats)
 				totalVa = rtn["cache_hit"]["value"]+rtn["cache_miss"]["value"]+totalVa
