@@ -47,3 +47,16 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `login`, `pass`, `group`) VALUES
 (1, 'admin', 'admin', 'admin'),
 (2, 'view', 'view', 'view');
+
+--
+-- Table structure for table `vcl`
+--
+
+CREATE TABLE IF NOT EXISTS `vcl` (   
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cluster` int(11) NOT NULL,
+  `user` text NOT NULL,
+  `date` text NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`) 
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
