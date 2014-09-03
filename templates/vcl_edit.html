@@ -20,6 +20,7 @@
     		</style>
 			<form id="target" action="send_vcl" method="POST">
 				<input type="hidden" name="clusterID" value="{{ clusterID }}">
+				<input type="hidden" name="user" value="{{ session['vag_auth'] }}">
 				<textarea id="code" class="codigo" name="vclConteudo">{{ vcl_data }}</textarea>	
 				<br>
 				<button type="submit" class="btn btn-primary">Save</button>
