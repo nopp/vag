@@ -1,0 +1,31 @@
+    {% extends "layout.html" %}
+    {% block body %}
+	{% if session["vag_group"] == "admin" %}
+			<script src="/static/js/check_ban.js"></script>
+			<h2 class="linha"><i class="fa fa-history"> VCL history - {{ cluster_name }}</i></h2>
+			<table class="table">
+      			<thead>
+        			<tr>
+          				<th>#</th>
+          				<th>Last modified</th>
+          				<th>User</th>
+          				<th>Cluster</th>
+          				<th>Action</th>
+        			</tr>
+      			</thead>
+      			<tbody>
+				{% for vcl in vcl_history %}
+					<tr>
+						<td>{{ vcl[0] }}</td>
+						<td>{{ vcl[1] }}</td>
+						<td>{{ vcl[2] }}</td>
+						<td>{{ vcl[3] }}</td>
+						<td><a href="/vcl_history_view/{{ vcl[0] }}"><button type="button" class="btn btn-default">View VCL</button></a></td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+	{% else %}
+		<h2>Restricted area</h2>
+	{% endif %}
+    {% endblock %}
