@@ -232,7 +232,7 @@ def sendVcl():
 	if(verifyAdmin()):
 		if request.method == 'POST':
 			vag = Vag()
-			rtn = vag.saveVCL(request.form['clusterID'],request.form['vclConteudo'])
+			rtn = vag.saveVCL(request.form['clusterID'],request.form['user'],request.form['vclConteudo'])
 		flash(rtn)
 		return redirect(url_for('index'))
 	else:
