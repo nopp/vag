@@ -344,7 +344,8 @@ class Vag:
 				vsapi = vsApi()
 				# remove all ascii from VCL config
 				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
-				self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
+			# Save VCL on DB one time
+			self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
 			c.close()
 			return rtn
 		else:
