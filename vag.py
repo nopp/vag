@@ -239,6 +239,35 @@ def sendVcl():
 		flash("Restricted area!")
 		return redirect(url_for('login'))
 
+@app.route('/history')
+def history():
+	if(verifyAdmin()):
+		vag = Vag()
+		return render_template('history.html', clusters=vag.returnClusters())
+	else:
+		flash("Restricted area!")
+		return redirect(url_for('login'))
+
+@app.route('/vcl_history', methods=['POST'])
+def vclHistory():
+	if(verifyAdmin()):
+		if request.method == 'POST':		
+			vag = Vag()
+			return render_template('vcl_history.html', vcl_history=vag.vclHistory(request.form['cluster']), cluster_name=vag.returnClusterNAME(request.form['cluster']))
+	else:
+		flash("Restricted area!")
+		return redirect(url_for('login'))
+
+@app.route('/vcl_history_view/<vclID>', methods=['GET'])
+def vclHistoryView(vclID):
+	if(verifyAdmin()):
+		if request.method == 'GET':
+			vag = Vag()
+			return render_template('vcl_history_view.html', vcl_data=vag.returnVclDB(vclID))
+		else:
+			flash("Restricted area!")
+			return redirect(url_for('login'))
+
 if __name__ == '__main__':
 	vaIp = config.get('conf','vaIp')
 	vaPort = config.get('conf','vaPort')
