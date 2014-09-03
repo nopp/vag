@@ -87,7 +87,26 @@ class Vag:
 				c.close()
 				return "Cluster "+clusterName+" doens't exists!"
 		except:
-			return "Error to connect on sqlite"
+			return "Error to connect on DB"
+
+	# Return cluter name (with cluster id)
+	def returnClusterNAME(self,clusterID):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select count(*) from cluster where id = %s',[clusterID])
+			total = c.fetchone()[0]
+			varnishs = []
+			if total >= 1:
+				c.execute('select * from cluster where id = %s',[clusterID])
+				cNAME = c.fetchone()[1]
+				c.close()	
+				return cNAME
+			else:
+				c.close()
+				return "Cluster "+clusterID+" doens't exists!"
+		except:
+			return "Error to connect on DB"
 
 	# Register new varnish
 	def addVarnish(self,name,ip,cluster):
@@ -331,6 +350,17 @@ class Vag:
 		except MySQLdb.Error, e:
 			return "Don't have VCL active on this cluster"
 
+	# Return VCL content from DB
+	def returnVclDB(self,vclID):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select * from vcl where id = %s',[vclID])
+			result = c.fetchone()
+			return result
+		except MySQLdb.Error, e:
+			return "Don't have this VCL on DB!"
+
 	# Save VCL
 	def saveVCL(self,cluster,user,vclConteudo):
 		con = self.connect()
@@ -360,6 +390,32 @@ class Vag:
 		dateNow = today.ctime()
 		c.execute('insert into vcl(id_cluster,user,date,content) VALUES(%s,%s,%s,%s)',[cluster,user,dateNow,content])
 		con.commit()
+
+	# Return VCL history
+	def vclHistory(self,clusterID):
+		try:
+			con = self.connect()
+			c = con.cursor()
+			c.execute('select * from vcl where id_cluster = %s',[clusterID])
+			total = c.fetchone()[0]
+			vcls = []
+			if total >= 1:
+				c.execute('select * from vcl where id_cluster = %s order by id ASC LIMIT 10',[clusterID])
+				for vns in c.fetchall():
+					clusterName = self.returnClusterNAME(vns[1])
+					vcl = []
+					# VCL id
+					vcl.append(vns[0])
+					# VCL date
+					vcl.append(vns[3])
+					# User	
+					vcl.append(vns[2])
+					# Cluster name
+					vcl.append(clusterName)
+					vcls.append(vcl)
+			return vcls
+		except:
+			return "VAG - VCL History fail!"
 
 	# Return Cluster Stats
 	# Will be sum all values of varnish cluster
