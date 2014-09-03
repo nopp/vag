@@ -4,10 +4,10 @@
 import json
 import urllib
 import MySQLdb
-import datetime
 import commands
 import ConfigParser
 from urlparse import urlparse
+from time import gmtime, strftime
 
 config = ConfigParser.RawConfigParser()
 config.read('config.cfg')
@@ -386,8 +386,7 @@ class Vag:
 	def saveVCLdb(self,cluster,user,content):
 		con = self.connect()
 		c = con.cursor()
-		today = datetime.date.today()
-		dateNow = today.ctime()
+		dateNow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 		c.execute('insert into vcl(id_cluster,user,date,content) VALUES(%s,%s,%s,%s)',[cluster,user,dateNow,content])
 		con.commit()
 
