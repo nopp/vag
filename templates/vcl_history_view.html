@@ -1,0 +1,5 @@
+    {% extends "layout.html" %}
+    {% block body %}
+    	<h2 class="linha"><i class="fa fa-pencil-square-o"> VCL edited by {{ vcl_data[2] }} on {{ vcl_data[3] }}</i></h2>
+			<textarea rows="35" cols="125">{{ vcl_data[4] }}</textarea>	
+    {% endblock %}
