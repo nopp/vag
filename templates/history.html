@@ -1,0 +1,15 @@
+    {% extends "layout.html" %}
+    {% block body %}
+		<h2 class="linha"><i class="fa fa-history"> VCL history</i></h2>
+		<form action="vcl_history" method="POST">
+			<div class="form-group">
+				<label for="cluster">Cluster</label>
+				<select name="cluster" class="form-control">
+				{% for cst in clusters %}
+					<option value="{{ cst[0] }}">{{ cst[1] }}</option>
+				{% endfor %}
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">View</button>
+		</form>
+    {% endblock %}
