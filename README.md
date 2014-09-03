@@ -19,7 +19,6 @@ To Do
 =====
 
 * Graphics
-* Save VCL edited on MySQL.
 
 How to use
 ==========
