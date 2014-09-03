@@ -4,6 +4,7 @@
 import json
 import urllib
 import MySQLdb
+import datetime
 import commands
 import ConfigParser
 from urlparse import urlparse
@@ -331,7 +332,7 @@ class Vag:
 			return "Don't have VCL active on this cluster"
 
 	# Save VCL
-	def saveVCL(self,cluster,vclConteudo):
+	def saveVCL(self,cluster,user,vclConteudo):
 		con = self.connect()
 		c = con.cursor()
 		c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
@@ -343,11 +344,21 @@ class Vag:
 				vsapi = vsApi()
 				# remove all ascii from VCL config
 				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
+				self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
 			c.close()
 			return rtn
 		else:
 			c.close()
 			return "VCL on "+vns[1]+" fail!"
+
+	# Save VCL on DB
+	def saveVCLdb(self,cluster,user,content):
+		con = self.connect()
+		c = con.cursor()
+		today = datetime.date.today()
+		dateNow = today.ctime()
+		c.execute('insert into vcl(id_cluster,user,date,content) VALUES(%s,%s,%s,%s)',[cluster,user,dateNow,content])
+		con.commit()
 
 	# Return Cluster Stats
 	# Will be sum all values of varnish cluster
