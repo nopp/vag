@@ -1,0 +1,33 @@
+#!/bin/sh
+workdir=/opt/vag/
+ 
+start() {
+    cd $workdir
+    /usr/bin/python vag.py > /var/log/vag/app.log &
+    echo "Server started."
+}
+ 
+stop() {
+    pid=`ps -ef | grep '[p]ython vag.py' | awk '{ print $2 }'`
+    echo $pid
+    kill $pid
+    sleep 2
+    echo "Server killed."
+}
+ 
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop   
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: /etc/init.d/vag {start|stop|restart}"
+    exit 1
+esac
+exit 0
