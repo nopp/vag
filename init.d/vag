@@ -3,7 +3,7 @@ workdir=/opt/vag/
  
 start() {
     cd $workdir
-    /usr/bin/python vag.py > /var/log/vag/app.log &
+    /usr/bin/python vag.py &
     echo "Server started."
 }
  
