@@ -1,6 +1,7 @@
 #
 # VAG - Varnish Administration GUI
 #
+import logging
 from flask import *
 from lib.vag import *
 import ConfigParser
@@ -269,6 +270,9 @@ def vclHistoryView(vclID):
 			return redirect(url_for('login'))
 
 if __name__ == '__main__':
+	# Log
+	logging.basicConfig(filename='/var/log/vag/app.log',level=logging.DEBUG)
+	# Run APP
 	vaIp = config.get('conf','vaIp')
 	vaPort = config.get('conf','vaPort')
-	app.run(host=vaIp,port=int(vaPort),debug=True)
+	app.run(host=vaIp,port=int(vaPort))
