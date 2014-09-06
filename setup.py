@@ -5,7 +5,7 @@ sys.path.append('/opt/vag/')
 
 setup(
 	name='vag',
-	version="0.3",
+	version="1.0",
 	description='Varnish Administration GUI',
 	author='Carlos Augusto Malucelli',
 	author_email='carlos@carlosmalucelli.com',
