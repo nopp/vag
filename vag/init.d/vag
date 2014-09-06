@@ -1,10 +1,10 @@
 #!/bin/sh
-workdir=/opt/vag/
+workdir=/usr/lib/python2.7/site-packages/vag-0.3-py2.7.egg/vag/
  
 start() {
     cd $workdir
     /usr/bin/python vag.py &
-    echo "Server started."
+    echo "VAG - Started."
 }
  
 stop() {
@@ -12,7 +12,7 @@ stop() {
     echo $pid
     kill $pid
     sleep 2
-    echo "Server killed."
+    echo "VAG - Killed."
 }
  
 case "$1" in

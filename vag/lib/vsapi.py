@@ -9,7 +9,7 @@ import ConfigParser
 from urllib2 import Request, urlopen, URLError
 
 config = ConfigParser.RawConfigParser()
-config.read('config.cfg')
+config.read('/etc/vag/config.cfg')
 
 class vsApi():
 

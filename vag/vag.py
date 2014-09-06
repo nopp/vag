@@ -7,7 +7,7 @@ from lib.vag import *
 import ConfigParser
 
 config = ConfigParser.RawConfigParser()
-config.read('config.cfg')
+config.read('/etc/vag/config.cfg')
 
 app = Flask(__name__)
 app.secret_key = 'aYG>.k*((*@jjkh>>'

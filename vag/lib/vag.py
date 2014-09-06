@@ -10,7 +10,7 @@ from urlparse import urlparse
 from time import gmtime, strftime
 
 config = ConfigParser.RawConfigParser()
-config.read('config.cfg')
+config.read('/etc/vag/config.cfg')
 
 # Varnish Agent API
 from lib.vsapi import *
