@@ -20,12 +20,17 @@ To Do
 
 * Graphics
 
-How to use
-==========
+How to install
+==============
 
-This tool works with secret file value.
+1) git clone https://github.com/nopp/vag
+2) python setup.py install
+3) Create database VAG (on MySQL) and import /etc/vag/vag.sql
+4) Verify workdir on /etc/init.d/vag, if necessary change to the correct.
+5) Start the application: /etc/init.d/vag start
 
-python vag.py
+How to access
+=============
 
 http://ip:5010
 
