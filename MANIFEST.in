@@ -1,0 +1,2 @@
+recursive-include vag/templates *
+recursive-include vag/static *
