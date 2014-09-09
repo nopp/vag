@@ -346,7 +346,10 @@ class Vag:
 			vsapi = vsApi()
 			resultVcl = vsapi.vcl_show(result[2],vclName)
 			# decode here isn't needed, but, if the user put ascii on default.vcl, this will be util
-			return resultVcl.decode('ascii','ignore')
+			if resultVcl.message != "timed out":
+				return resultVcl.decode('ascii','ignore')
+			else:
+				return "Varnish connection error "+result[2]
 		except MySQLdb.Error, e:
 			return "Don't have VCL active on this cluster"
 
