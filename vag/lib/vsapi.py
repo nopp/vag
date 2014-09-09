@@ -133,6 +133,7 @@ class vsApi():
 			c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
 			c.setopt(pycurl.HTTPHEADER, ['Host: '+str(domain)])
 			c.setopt(pycurl.POST, 1)
+			c.setopt(c.TIMEOUT, 2)
 			c.setopt(pycurl.POSTFIELDS, str(postData))
 			c.setopt(pycurl.USERPWD, aData)
 			c.perform()
