@@ -2,6 +2,7 @@
 # VAG - Varnish Administration GUI
 #
 import json
+import socket
 import urllib
 import MySQLdb
 import commands
