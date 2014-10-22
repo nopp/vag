@@ -323,15 +323,30 @@ class Vag:
 				resultBans[cluster[1]] = aux
 		return resultBans
 
+    # Return status of varnish agent
+    def varnishIsOnline(self,varnishIP):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(1)
+        rst = s.connect_ex((varnishIP,6085))
+        # Varnish Agent is on-line
+        if rst == 0:
+            return True
+        # Varnish Agent is down
+        else:
+            return False
+
 	# Return VCL activated
 	def returnVclActive(self,cluster):
 		try:
 			con = self.connect()
 			c = con.cursor()
 			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
-			result = c.fetchone()
+            for varnish in c.fetchall():
+                if self.varnishIsOnline(varnish[2]):
+                    varnishON = varnish[2]
+                    break
 			vsapi = vsApi()
-			vclActive = vsapi.vcl_active(result[2])
+			vclActive = vsapi.vcl_active(varnishON)
 			return vclActive
 		except:
 			return "This cluster doesn't have VCL yet!"
@@ -342,9 +357,12 @@ class Vag:
 			con = self.connect()
 			c = con.cursor()
 			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[idCluster])
-			result = c.fetchone()
+            for varnish in c.fetchall():
+                if self.varnishIsOnline(varnish[2]):
+                    varnishON = varnish[2]
+                    break
 			vsapi = vsApi()
-			resultVcl = vsapi.vcl_show(result[2],vclName)
+			resultVcl = vsapi.vcl_show(varnishON,vclName)
 			# decode here isn't needed, but, if the user put ascii on default.vcl, this will be util
 			if "message" not in dir(resultVcl):
 				return resultVcl.decode('ascii','ignore')
