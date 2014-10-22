@@ -2,11 +2,11 @@
 # VAG - Varnish Administration GUI
 #
 import json
-import socket
 import urllib
 import MySQLdb
 import commands
 import ConfigParser
+import socket
 from urlparse import urlparse
 from time import gmtime, strftime
 
@@ -255,6 +255,7 @@ class Vag:
 						resultClusters[cluster[1]] = []
 						for varnish in v.fetchall():
 							vsapi = vsApi()
+							# verify if varnish is online
 							vsstatus =  vsapi.vcl_status(varnish[2])
 							if "running" in vsstatus:
 								rtnstatus = "OK"
@@ -284,22 +285,25 @@ class Vag:
 						v.execute('select * from varnish where id_cluster = %s ORDER BY name ASC',[cluster[0]])
 						resultClusters[cluster[1]] = []
 						for varnish in v.fetchall():
-							vsapi = vsApi()
-							vsstatus =  vsapi.vcl_status(varnish[2])
-							if "running" in vsstatus:
-								rtnstatus = "OK"
-							else:
-								rtnstatus = "DESLIGADO"
-							# idVarnish
-							aux.append(varnish[0])
-							# Varnish Name
-							aux.append(varnish[1])
-							# Varnish IP
-							aux.append(varnish[2])
-							# Varnish Status
-							aux.append(rtnstatus)
-							resultClusters[cluster[1]].append(aux)
-							aux = []
+							# Verify if varnish agent is online
+							if self.varnishIsOnline(varnish[2]):
+								vsapi = vsApi()
+								# Verify if varnish is online
+								vsstatus =  vsapi.vcl_status(varnish[2])
+								if "running" in vsstatus:
+									rtnstatus = "OK"
+								else:
+									rtnstatus = "DESLIGADO"
+								# idVarnish
+								aux.append(varnish[0])
+								# Varnish Name
+								aux.append(varnish[1])
+								# Varnish IP
+								aux.append(varnish[2])
+								# Varnish Status
+								aux.append(rtnstatus)
+								resultClusters[cluster[1]].append(aux)
+								aux = []
 			except:
 				return "Error to return varnish from specific cluster!"
 		return resultClusters
@@ -324,17 +328,17 @@ class Vag:
 				resultBans[cluster[1]] = aux
 		return resultBans
 
-    # Return status of varnish agent
-    def varnishIsOnline(self,varnishIP):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(1)
-        rst = s.connect_ex((varnishIP,6085))
-        # Varnish Agent is on-line
-        if rst == 0:
-            return True
-        # Varnish Agent is down
-        else:
-            return False
+	# Return status of varnish agent
+	def varnishIsOnline(self,varnishIP):
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		s.settimeout(1)
+		rst = s.connect_ex((varnishIP,6085))
+		# Varnish Agent is on-line
+		if rst == 0:
+			return True
+		# Varnish Agent is down
+		else:
+			return False
 
 	# Return VCL activated
 	def returnVclActive(self,cluster):
@@ -342,10 +346,10 @@ class Vag:
 			con = self.connect()
 			c = con.cursor()
 			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
-            for varnish in c.fetchall():
-                if self.varnishIsOnline(varnish[2]):
-                    varnishON = varnish[2]
-                    break
+			for varnish in c.fetchall():
+				if self.varnishIsOnline(varnish[2]):
+					varnishON = varnish[2]
+					break
 			vsapi = vsApi()
 			vclActive = vsapi.vcl_active(varnishON)
 			return vclActive
@@ -358,10 +362,10 @@ class Vag:
 			con = self.connect()
 			c = con.cursor()
 			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[idCluster])
-            for varnish in c.fetchall():
-                if self.varnishIsOnline(varnish[2]):
-                    varnishON = varnish[2]
-                    break
+			for varnish in c.fetchall():
+				if self.varnishIsOnline(varnish[2]):
+					varnishON = varnish[2]
+					break
 			vsapi = vsApi()
 			resultVcl = vsapi.vcl_show(varnishON,vclName)
 			# decode here isn't needed, but, if the user put ascii on default.vcl, this will be util
@@ -383,29 +387,29 @@ class Vag:
 		except MySQLdb.Error, e:
 			return "Don't have this VCL on DB!"
 
-    # Save VCL
-    def saveVCL(self,cluster,user,vclConteudo):
-        con = self.connect()
-        c = con.cursor()
-        c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
-        total = c.fetchone()[0]
-        if total >= 1:
-            c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
-            rtn = ""
-            for vns in c.fetchall():
-                if self.varnishIsOnline(vns[2]):
-                    vsapi = vsApi()
-                    # remove all ascii from VCL config
-                    rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
-                else:
-                    rtn = vns[2]+" down! "
-            # Save VCL on DB one time
-            self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
-            c.close()
-            return rtn
-        else:
-            c.close()
-            return "VCL on "+vns[1]+" fail!"
+	# Save VCL
+	def saveVCL(self,cluster,user,vclConteudo):
+		con = self.connect()
+		c = con.cursor()
+		c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
+		total = c.fetchone()[0]
+		if total >= 1:
+			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+			rtn = ""
+			for vns in c.fetchall():
+				if self.varnishIsOnline(vns[2]):
+					vsapi = vsApi()
+					# remove all ascii from VCL config
+					rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
+				else:
+					rtn = vns[2]+" down!"
+			# Save VCL on DB one time
+			self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
+			c.close()
+			return rtn
+		else:
+			c.close()
+			return "VCL on "+vns[1]+" fail!"
 
 	# Save VCL on DB
 	def saveVCLdb(self,cluster,user,content):
@@ -454,11 +458,13 @@ class Vag:
 			c.execute('select * from varnish where id_cluster = %s',[idCluster])
 			for vns in c.fetchall():
 				vsapi = vsApi()
-				# Check if agent is On-line
-				vaStats = vsapi.varnish_stats(vns[2])
-				rtn = json.loads(vaStats)
-				totalVa = rtn["cache_hit"]["value"]+rtn["cache_miss"]["value"]+totalVa
-				totalVaMiss = rtn["cache_miss"]["value"]+totalVaMiss
+				# Verify if varnish agent is online
+				if self.varnishIsOnline(vns[2]):
+					# Verify if varnish is online
+					vaStats = vsapi.varnish_stats(vns[2])
+					rtn = json.loads(vaStats)
+					totalVa = rtn["cache_hit"]["value"]+rtn["cache_miss"]["value"]+totalVa
+					totalVaMiss = rtn["cache_miss"]["value"]+totalVaMiss
 			return str(totalVa)+","+str(totalVaMiss) 
 
 	# Return total of varnish and cluster from DB
