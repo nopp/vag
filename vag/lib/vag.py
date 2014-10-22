@@ -383,26 +383,29 @@ class Vag:
 		except MySQLdb.Error, e:
 			return "Don't have this VCL on DB!"
 
-	# Save VCL
-	def saveVCL(self,cluster,user,vclConteudo):
-		con = self.connect()
-		c = con.cursor()
-		c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
-		total = c.fetchone()[0]
-		if total >= 1:
-			c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
-			rtn = ""
-			for vns in c.fetchall():
-				vsapi = vsApi()
-				# remove all ascii from VCL config
-				rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
-			# Save VCL on DB one time
-			self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
-			c.close()
-			return rtn
-		else:
-			c.close()
-			return "VCL on "+vns[1]+" fail!"
+    # Save VCL
+    def saveVCL(self,cluster,user,vclConteudo):
+        con = self.connect()
+        c = con.cursor()
+        c.execute('select count(*) from varnish where id_cluster = %s',[cluster])
+        total = c.fetchone()[0]
+        if total >= 1:
+            c.execute('select * from varnish as v, cluster as c where v.id_cluster = c.id and v.id_cluster = %s',[cluster])
+            rtn = ""
+            for vns in c.fetchall():
+                if self.varnishIsOnline(vns[2]):
+                    vsapi = vsApi()
+                    # remove all ascii from VCL config
+                    rtn = rtn+vns[2]+" - "+vsapi.vcl_save(vns[2],vclConteudo.encode('ascii','ignore'))
+                else:
+                    rtn = vns[2]+" down! "
+            # Save VCL on DB one time
+            self.saveVCLdb(cluster,user,vclConteudo.encode('ascii','ignore'))
+            c.close()
+            return rtn
+        else:
+            c.close()
+            return "VCL on "+vns[1]+" fail!"
 
 	# Save VCL on DB
 	def saveVCLdb(self,cluster,user,content):
