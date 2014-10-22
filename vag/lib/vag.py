@@ -346,7 +346,7 @@ class Vag:
 			vsapi = vsApi()
 			resultVcl = vsapi.vcl_show(result[2],vclName)
 			# decode here isn't needed, but, if the user put ascii on default.vcl, this will be util
-			if resultVcl.message != "timed out":
+			if "message" not in dir(resultVcl):
 				return resultVcl.decode('ascii','ignore')
 			else:
 				return "Varnish connection error "+result[2]
