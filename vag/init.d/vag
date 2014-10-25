@@ -1,5 +1,5 @@
 #!/bin/sh
-workdir=/usr/lib/python2.7/site-packages/vag-0.3-py2.7.egg/vag/
+workdir=/usr/lib/python2.7/site-packages/vag-1.0-py2.7.egg/vag/
  
 start() {
     cd $workdir
