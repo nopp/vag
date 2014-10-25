@@ -11,7 +11,7 @@ Required
 ========
 
 * Python + Flask
-* Varnish 3.x 4.x
+* Varnish 3.x
 * Varnish-agent 2.2+
 * MySQL
 
