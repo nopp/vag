@@ -3,7 +3,9 @@ Varnish Administration GUI
 (Open source VAC alternative)
 
 * VCL Editor (vim like :))
-* Purge
+* Purge/Ban
+* Real time cluster info
+* VCL change history
 
 Obs:. I'm not a programmer :), do not expect a good code!
 
