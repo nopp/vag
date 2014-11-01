@@ -17,11 +17,6 @@ Required
 * Varnish-agent 2.2+
 * MySQL
 
-To Do
-=====
-
-* Graphics
-
 How to install
 ==============
 
