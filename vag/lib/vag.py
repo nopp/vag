@@ -428,7 +428,7 @@ class Vag:
 			total = c.fetchone()[0]
 			vcls = []
 			if total >= 1:
-				c.execute('select * from vcl where id_cluster = %s order by id ASC LIMIT 10',[clusterID])
+				c.execute('select * from vcl where id_cluster = %s order by id DESC LIMIT 10',[clusterID])
 				for vns in c.fetchall():
 					clusterName = self.returnClusterNAME(vns[1])
 					vcl = []
