@@ -14,15 +14,19 @@
         			</tr>
       			</thead>
       			<tbody>
-				{% for vcl in vcl_history %}
-					<tr>
-						<td>{{ vcl[0] }}</td>
-						<td>{{ vcl[1] }}</td>
-						<td>{{ vcl[2] }}</td>
-						<td>{{ vcl[3] }}</td>
-						<td><a href="/vcl_history_view/{{ vcl[0] }}"><button type="button" class="btn btn-default">View VCL</button></a></td>
-					</tr>
-				{% endfor %}
+      			{% if vcl_history is string %}
+      				{{ vcl_history }}
+      			{% else %}
+					{% for vcl in vcl_history %}
+						<tr>
+							<td>{{ vcl[0] }}</td>
+							<td>{{ vcl[1] }}</td>
+							<td>{{ vcl[2] }}</td>
+							<td>{{ vcl[3] }}</td>
+							<td><a href="/vcl_history_view/{{ vcl[0] }}"><button type="button" class="btn btn-default">View VCL</button></a></td>
+						</tr>
+					{% endfor %}
+				{% endif %}
 				</tbody>
 			</table>
 	{% else %}
