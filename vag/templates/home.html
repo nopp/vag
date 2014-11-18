@@ -9,17 +9,13 @@
 					<h3 class="panel-title">Clusters {% if session["vag_group"] == "admin" %}<a href="/manage"><i class="fa fa-wrench fa-lg"></i></a>{% endif %}</h3>
 				</div>
 				<div class="panel-body">
-				{% if clt is string %}
-					{{ clt }}
-				{% else %}
-					{% for key,value in clt.iteritems() %}
-						<b><i class="fa fa-angle-double-right"></i> {{ key }}</b> <a href="/cluster_info/{{ key }}"><i class="fa fa-bar-chart-o"></i></a><br>
-						{% for va in value %}
-							&nbsp;&nbsp;{% if va[3] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ va[1] }} ({{ va[2] }})<br>
-						{% endfor %}
-						<hr>	
+				{% for key,value in clt.iteritems() %}
+					<b><i class="fa fa-angle-double-right"></i> {{ key }}</b> <a href="/cluster_info/{{ key }}"><i class="fa fa-bar-chart-o"></i></a><br>
+					{% for va in value %}
+						&nbsp;&nbsp;{% if va[3] == "OK" %}<i class="fa fa-circle-o-notch fa-vaok"></i>{% else %}<i class="fa fa-circle-o-notch fa-vanok"></i>{% endif %} {{ va[1] }} ({{ va[2] }})<br>
 					{% endfor %}
-				{% endif %}
+					<hr>	
+				{% endfor %}
 				</div>
 			</div>
 		</div>
