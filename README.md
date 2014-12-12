@@ -26,7 +26,9 @@ How to install
 * Verify workdir on /etc/init.d/vag, if necessary change to the correct.
 * Start the application: /etc/init.d/vag start
 * Put vcl_updater.sh on cron, on all varnish agents: 
+
   10 * * * * vcl_updater.sh
+  
   This little "hammer" will be fixed on the new versions.
 
 How to access
