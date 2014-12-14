@@ -2,7 +2,7 @@
 BACKUPDIR="/etc/varnish/backup/"
 AGENTDIR="/var/lib/varnish-agent/"
 VCLDEFAULT="/etc/varnish/default.vcl"
-LOGFILE="/abd/scripts/vcl.log"
+LOGFILE="/var/log/vag/vcl.log"
 AGENTVCL=$(find $AGENTDIR -mtime -1 -type f \( -iname \*.vcl ! -iname boot.vcl \) -exec ls -t1 {} \; | sed '1!d' )
 
 # backup default vcl
