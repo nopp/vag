@@ -20,6 +20,8 @@ Required
 How to install
 ==============
 
+* yum install python-devel mariadb-devel
+* pip install mysql-python
 * git clone https://github.com/nopp/vag
 * python setup.py install
 * Create database VAG (on MySQL) and import /etc/vag/vag.sql
