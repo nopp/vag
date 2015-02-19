@@ -13,6 +13,13 @@ config.read('/etc/vag/config.cfg')
 
 class vsApi():
 
+# Another little hammer
+    def verifyError(self,e):
+        if "reason" in dir(e):
+            return e.reason
+        else:
+            return e.read()
+
 	# http://ipAgent/action/extra
 	def urlRequest(self,ipAgent,action,extra=None,mtd=None,domain=None):
 		uName = config.get('conf','vaName')
@@ -40,7 +47,7 @@ class vsApi():
 				req.add_header('Authorization', userData)
 				return req
 			except URLError, e:
-				return e.reason
+				return self.verifyError(e)
 		else:
 			try:
 				req = urllib2.Request('http://'+str(ipAgent)+':6085/'+str(action)+'/')
@@ -49,7 +56,7 @@ class vsApi():
 				req.add_header('Authorization', userData)
 				return req
 			except URLError, e:
-				return e.reason
+				return self.verifyError(e)
 
 	# Return varnish status
 	def vcl_status(self,ipAgent):
@@ -69,7 +76,7 @@ class vsApi():
 			res = urllib2.urlopen(req,timeout = 2).read().splitlines()
 			return res[-1].split()[2]
 		except URLError, e:
-			return e.reason
+			return self.verifyError(e)
 
 	# Return VCL activated
 	def vcl_active(self,ipAgent):
@@ -78,7 +85,7 @@ class vsApi():
 			rtn = urllib2.urlopen(req,timeout = 2)
 			return rtn.read()
 		except URLError, e:
-			return e.reason
+			return self.verifyError(e)
 
 	# Return content of VCL
 	def vcl_show(self,ipAgent,vclName):
@@ -96,7 +103,7 @@ class vsApi():
 			conteudo = aux
 			return conteudo
 		except URLError, e:
-			return e.reason
+			return self.verifyError(e)
 
 	# Save VCL
 	def vcl_save(self,ipAgent,vclContent):
@@ -107,7 +114,7 @@ class vsApi():
 			rtn = res.read()+" "+self.vcl_use(ipAgent,vclName)
 			return rtn
 		except URLError, e:
-			return e.read()
+			return self.verifyError(e)
 
 	# Active VCL
 	def vcl_use(self,ipAgent,vclName):
@@ -120,7 +127,7 @@ class vsApi():
 				rtn = "VCL use error: "+rtn.msg
 			return rtn
 		except URLError, e:
-			return e.reason
+			return self.verifyError(e)
 
 	# Ban/Purge
 	def vcl_ban(self,ipAgent,domain,uri):
@@ -163,7 +170,7 @@ class vsApi():
 						break
 			return list
 		except URLError, e:
-			return e.read()
+			return self.verifyError(e)
 
 	# Return varnish stats
 	def varnish_stats(self,ipAgent):
@@ -172,4 +179,4 @@ class vsApi():
 			rtn = urllib2.urlopen(req,timeout = 2)
 			return rtn.read()
 		except URLError, e:
-			return e.read()
+			return self.verifyError(e)
