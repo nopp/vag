@@ -13,12 +13,11 @@ config.read('/etc/vag/config.cfg')
 
 class vsApi():
 
-# Another little hammer
-    def verifyError(self,e):
-        if "reason" in dir(e):
-            return e.reason
-        else:
-            return e.read()
+	def verifyError(self,e):
+		if "reason" in dir(e):
+			return e.reason
+		else:
+			return e.read()
 
 	# http://ipAgent/action/extra
 	def urlRequest(self,ipAgent,action,extra=None,mtd=None,domain=None):
