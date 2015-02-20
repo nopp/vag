@@ -56,7 +56,6 @@ def index():
 	if "vag_auth" in session:
 		return render_template('home.html', clt=vag.varnishByCluster(), totalcl=totalCL, totalva=totalVA)
 	else:
-		flash("Please sign in!")
 		return redirect(url_for('login'))
 
 # Manage Cluster/Varnish
