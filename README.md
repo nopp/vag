@@ -40,12 +40,3 @@ http://ip:5010
 
 * Admin user: admin/admin
 * View user: view/view
-
-
-Screenshots
-==========
-![](http://rapido.taxi.br/img/tela_home.png)
-![](http://rapido.taxi.br/img/register_varnish.png)
-![](http://rapido.taxi.br/img/tela_ban.png)
-![](http://rapido.taxi.br/img/cluster_status.png)
-![](http://rapido.taxi.br/img/tela_edit.png)
