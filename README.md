@@ -14,12 +14,19 @@ Required
 
 * Python + Flask
 * Varnish 3.x
-* Varnish-agent 2.2+
+* Varnish-agent 2.2
 * MySQL
 
 How to install
 ==============
 
+VAGENT2.2
+* yum install libmicrohttpd-devel libcurl-devel
+* wget https://github.com/varnish/vagent2/archive/2.2.0.tar.gz
+* tar zxvf 2.2.0.tar.gz
+* cd vagent2-2.2.0/ && ./autoge.sh && ./configure && make && make install
+
+VAG
 * yum install python-devel mariadb-devel
 * pip install mysql-python
 * git clone https://github.com/nopp/vag
