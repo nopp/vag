@@ -2,7 +2,7 @@ Varnish Administration GUI
 =============================
 (Open source VAC alternative)
 
-* VCL Editor (vim like :))
+* VCL Editor
 * Purge/Ban
 * Real time cluster info
 * VCL change history
