@@ -49,3 +49,10 @@ http://ip:5010
 
 * Admin user: admin/admin
 * View user: view/view
+
+Screenshots
+===========
+![Image Alt](http://i66.tinypic.com/whzc.png)
+![Image Alt](http://i67.tinypic.com/w9tzb8.png)
+![Image Alt](http://i67.tinypic.com/29xuhlj.png)
+![Image Alt](http://i65.tinypic.com/25in39w.png)
