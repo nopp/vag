@@ -118,15 +118,21 @@ class vsApi():
 	# Active VCL
 	def vcl_use(self,ipAgent,vclName):
 		try:
-			req = self.urlRequest(ipAgent,"vcldeploy",vclName,"PUT")
-			rtn = urllib2.urlopen(req,timeout = 2)
-			if rtn.code == 200:
-				rtn = "VCL "+vclName+" activated!"
-			else:
-				rtn = "VCL use error: "+rtn.msg
-			return rtn
-		except URLError, e:
-			return self.verifyError(e)
+			uName = config.get('conf','vaName')
+			pWord = config.get('conf','vaPass')
+			aData = uName+":"+pWord
+			c = pycurl.Curl()
+			c.setopt(pycurl.URL, 'http://'+ipAgent+':6085/vcldeploy')
+			c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+			c.setopt(pycurl.HTTPHEADER, ['Host: '+str(domain)])
+			c.setopt(pycurl.PUT, 1)
+			c.setopt(c.TIMEOUT, 2)
+			c.setopt(pycurl.POSTFIELDS, str(vclName))
+			c.setopt(pycurl.USERPWD, aData)
+			c.perform()
+			return ipAgent+" VCL use OK! "
+		except:
+			return ipAgent+" VCL use failed! "
 
 	# Ban/Purge
 	def vcl_ban(self,ipAgent,domain,uri):
