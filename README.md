@@ -29,7 +29,7 @@ VAGENT2.2
   # varnish-agent
 
 VAG
-  # yum install python-devel mariadb-devel
+  # yum install python-devel mariadb-devel mysql-devel
   # pip install mysql-python
   # git clone https://github.com/nopp/vag
   # python setup.py install
