@@ -30,6 +30,7 @@ How to install
 
 # VAG
   yum install python-devel mariadb-devel mysql-devel
+  mkdir /var/log/vag/
   pip install mysql-python
   git clone https://github.com/nopp/vag
   python setup.py install
