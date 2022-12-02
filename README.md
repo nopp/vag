@@ -23,7 +23,7 @@ How to install
 VAGENT2.2
 ==========
 * yum install libmicrohttpd-devel libcurl-devel varnish-libs-devel
-* wget https://github.com/varnish/vagent2/archive/2.2.0.tar.gz
+* wget https://github.com/varnish/vagent2/archive/2.2.0.tar.gz or use locally file
 * tar zxvf 2.2.0.tar.gz
 * cd vagent2-2.2.0/ && ./autoge.sh && ./configure && make && make install
 * echo "varnish:yourPass" > /etc/varnish/agent_secret
